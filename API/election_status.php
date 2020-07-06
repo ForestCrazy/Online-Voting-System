@@ -11,15 +11,26 @@ $num_votelist = mysqli_num_rows($res_votelist);
 $resultArray = array();
 while($result = mysqli_fetch_array($res_votelist,MYSQLI_ASSOC)){
     $datetime1 = new DateTime(date("Y-m-d H:i:s"));
-    if ($result["announcement_time"] <= $datenow) { 
-        $datetimefor2 = $result["announcement_time"];
+    if ($result["announcement_time"] <= $datenow) {
         $html = "1";
+        $format_date = "NULL";
+        $format_date = "";
     } elseif ($result["end_time"] <= $datenow) {
         $html = "2";
+        $format_date = "ประกาศผลใน ";
     } elseif ($result["start_time"] <= $datenow) {
         $html = "3";
-    } else { 
+        $format_date = "ปิดการโหวตใน ";
+    } else {
         $html = "4";
+        $format_date = "เริ่มการโหวตใน ";
+    }
+    if ($format_date == "NULL") {
+        $result["cooldown"] = "NULL";
+    } else {
+        $result["format_date"] = $format_date;
+        $result["cooldown"] = $cooldowntime;
+        $result["html"] = $html;
     }
     array_push($resultArray,$result);
     //print_r($result);
