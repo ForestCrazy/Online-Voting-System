@@ -8,7 +8,7 @@ if (isset($_POST["election_id"])) {
     <script>
         function ElectionInfo() {
             $.ajax({
-                    url: "./API/election_list.php",
+                    url: "./API/election_status.php",
                     type: "GET",
                     data: "keyword=<?php echo $fetch_election_info['election_id']; ?>"
                 })
@@ -16,19 +16,23 @@ if (isset($_POST["election_id"])) {
                     var object = jQuery.parseJSON(result);
                     if (object != '') {
                         $("#election_status").empty();
+                        $("#vote_button").empty();
                         $.each(object, function(key, val) {
                             if (val["html"] === "3") {
                                 status = 'สถานะ : <button type="submit" disabled class="btn btn-success">open</button>';
+                                form = '<form action="?page=detail" method="post"><input type="hidden" name="election_id" value="' + val["election_id"] + '"><button type="submit" class="btn btn-primary">เข้าไปโหวตคะแนน</button>';
                             } else {
                                 status = 'สถานะ : <button type="submit" disabled class="btn btn-danger">close</button></form>';
+                                form = '<a href="login.php" class="btn btn-primary waves-effect waves-light disabled">เข้าไปโหวตคะแนน</a>';
                             }
                             $("#election_status").append(status);
+                            $("#vote_button").append(form);
                         });
                     }
                 });
         }
         ElectionInfo()
-        setInterval(ElectionInfo, 15000); // 1000 = 1 second
+        setInterval(ElectionInfo, 5000); // 1000 = 1 second
     </script>
     <div class="container">
         <div class="row">
@@ -46,8 +50,7 @@ if (isset($_POST["election_id"])) {
                 <!--Section: Testimonials v.1-->
                 <section class="section pb-3 text-center">
                     <!--Section heading-->
-                    <h2 class="section-heading h1 pt-4">รายชื่อผู้สมัคร
-                        <a href="login.php" class="btn btn-primary waves-effect waves-light">เข้าไปโหวตคะแนน</a> </h2>
+                    <h2 class="section-heading h1 pt-4">รายชื่อผู้สมัคร </h2>
                     <!--Section description-->
                     <p class="section-description">แนะนำข้อมูลผู้สมัครโหวต/เลือกตั้ง</p>
                     <div class="row">
@@ -165,6 +168,7 @@ if (isset($_POST["election_id"])) {
                         </div>
                         <!--Grid column-->
                     </div>
+                    <div class="d-flex justify-content-center" id="vote_button"></div>
                 </section>
                 <!--Section: Testimonials v.1-->
             </div>

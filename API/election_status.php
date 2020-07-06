@@ -14,7 +14,6 @@ while($result = mysqli_fetch_array($res_votelist,MYSQLI_ASSOC)){
     if ($result["announcement_time"] <= $datenow) {
         $html = "1";
         $format_date = "NULL";
-        $format_date = "";
     } elseif ($result["end_time"] <= $datenow) {
         $html = "2";
         $format_date = "ประกาศผลใน ";
@@ -26,10 +25,10 @@ while($result = mysqli_fetch_array($res_votelist,MYSQLI_ASSOC)){
         $format_date = "เริ่มการโหวตใน ";
     }
     if ($format_date == "NULL") {
-        $result["cooldown"] = "NULL";
+        $result["format_date"] = $format_date;
+        $result["html"] = $html;
     } else {
         $result["format_date"] = $format_date;
-        $result["cooldown"] = $cooldowntime;
         $result["html"] = $html;
     }
     array_push($resultArray,$result);
