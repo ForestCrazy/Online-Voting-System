@@ -1,39 +1,21 @@
 <?php
-if (isset($_POST["election_id"])) {
-?>
-<script>
-        function ElectionInfo() {
-            $.ajax({
-                    url: "./API/election_list.php",
-                    type: "GET",
-                    data: "keyword=<?php echo $_POST['election_id']; ?>"
-                })
-                .done(function(result) {
-                    var object = jQuery.parseJSON(result);
-                    if (object != '') {
-                        $("#election_info").empty();
-                        $.each(object, function(key, val) {
-                            info = '<div class="row"><div class="col"><br>';
-                            info = info + '<h3>' + val["title"] + '</h3>';
-                            info = info + '<p>รายละเอียดการโหวต : ' + val["detail"] + '</p>';
-                            info = info + '<b style="color:blue;">เปิดระบบ ' + val["start_time"] + ' น. ถึง ' + val["end_time"] + ' น.</b><br>';
-                            info = info + 'สถานะ : ';
-                            if (val["html"] === "3") {
-                                htmlbutton = '<button type="submit" disabled class="btn btn-success">open</button>';
-                            } else {
-                                htmlbutton = '<button type="submit" disabled class="btn btn-danger">close</button></form>';
-                            }
-                            info = info + htmlbutton;
-                            info = info + '</div></div>';
-                            $("#election_info").append(info);
-                        });
-                    }
-                });
-        }
-        ElectionInfo()
-        setInterval(ElectionInfo, 15000); // 1000 = 1 second
-    </script>
-    <div class="container" id="election_info">
+if (isset($_POST["election_id"])) { 
+    $e_id = mysqli_real_escape_string($connect, $_POST["election_id"]);
+    $sql_election_info = 'SELECT * FROM election WHERE election_id = "'. $e_id .'"';
+    $res_election_info = mysqli_query($connect, $sql_election_info);
+    $fetch_election_info = mysqli_fetch_assoc($res_election_info);
+    ?>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <br>
+                <h3><?php echo $fetch_election_info["title"]; ?></h3>
+                <p>รายละเอียดการโหวต : <?php echo $fetch_election_info["detail"]; ?></p>
+                <b style="color:blue;">เปิดระบบ <?php echo $fetch_election_info["start_time"]; ?> น. ถึง <?php echo $fetch_election_info["end_time"]; ?> น.</b>
+                <br>
+                สถานะ : <button class="btn btn-success btn-sm waves-effect waves-light" disabled>open</button>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <!--Section: Testimonials v.1-->
