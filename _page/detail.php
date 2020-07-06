@@ -5,6 +5,31 @@ if (isset($_POST["election_id"])) {
     $res_election_info = mysqli_query($connect, $sql_election_info);
     $fetch_election_info = mysqli_fetch_assoc($res_election_info);
     ?>
+    <script>
+        function ElectionInfo() {
+            $.ajax({
+                    url: "./API/election_list.php",
+                    type: "GET",
+                    data: "keyword=<?php echo $fetch_election_info['election_id']; ?>"
+                })
+                .done(function(result) {
+                    var object = jQuery.parseJSON(result);
+                    if (object != '') {
+                        $("#election_status").empty();
+                        $.each(object, function(key, val) {
+                            if (val["html"] === "3") {
+                                status = 'สถานะ : <button type="submit" disabled class="btn btn-success">open</button>';
+                            } else {
+                                status = 'สถานะ : <button type="submit" disabled class="btn btn-danger">close</button></form>';
+                            }
+                            $("#election_status").append(status);
+                        });
+                    }
+                });
+        }
+        ElectionInfo()
+        setInterval(ElectionInfo, 15000); // 1000 = 1 second
+    </script>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -13,7 +38,7 @@ if (isset($_POST["election_id"])) {
                 <p>รายละเอียดการโหวต : <?php echo $fetch_election_info["detail"]; ?></p>
                 <b style="color:blue;">เปิดระบบ <?php echo $fetch_election_info["start_time"]; ?> น. ถึง <?php echo $fetch_election_info["end_time"]; ?> น.</b>
                 <br>
-                สถานะ : <button class="btn btn-success btn-sm waves-effect waves-light" disabled>open</button>
+                <div id="election_status"></div>
             </div>
         </div>
         <div class="row">
