@@ -20,7 +20,7 @@ if (isset($_POST["election_id"])) {
                         $.each(object, function(key, val) {
                             if (val["html"] === "3") {
                                 status = 'สถานะ : <button type="submit" disabled class="btn btn-success">open</button>';
-                                form = '<form action="?page=vote" method="post"><input type="hidden" name="election_id" value="' + val["election_id"] + '"><button type="submit" class="btn btn-primary">เข้าไปโหวตคะแนน</button>';
+                                form = '<form action="?page=vote" method="post"><input type="hidden" name="election_id" value="' + <?php echo $fetch_election_info['election_id']; ?> + '"><button type="submit" class="btn btn-primary">เข้าไปโหวตคะแนน</button>';
                             } else {
                                 status = 'สถานะ : <button type="submit" disabled class="btn btn-danger">close</button></form>';
                                 form = '<a href="login.php" class="btn btn-primary waves-effect waves-light disabled">เข้าไปโหวตคะแนน</a>';
