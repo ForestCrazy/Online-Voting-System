@@ -48,6 +48,8 @@ $datenow = date("Y-m-07 H:i:s");
             include_once __DIR__ . '/_page/features.php';
         } elseif ($_GET['page'] == "detail") {
             include_once __DIR__ . '/_page/detail.php';
+        } elseif ($_GET['page'] == "vote") {
+            include_once __DIR__ . '/_page/vote.php';
         } else {
             echo '<div class="container"><div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i> ไม่พบหน้าที่ท่านร้องขอ กำลังพาท่านกลับไปหน้าหลัก...</div></div>';
             echo '<meta http-equiv="refresh" content="3;URL=?page=home"';
