@@ -15,6 +15,8 @@ $datenow = date("Y-m-d H:i:s");
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" type="text/css" rel="stylesheet">
     <link href="asset/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
     <script src="asset/js/jquery.js"></script>
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.14.0/dist/sweetalert2.all.min.js"></script>
     <style>
         body {
             font-family: 'Kanit', sans-serif;

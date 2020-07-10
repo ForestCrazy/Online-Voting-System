@@ -23,7 +23,7 @@ if (isset($_POST["election_id"])) {
                                 form = '<form action="?page=vote" method="post"><input type="hidden" name="election_id" value="' + <?php echo $fetch_election_info['election_id']; ?> + '"><button type="submit" class="btn btn-primary">เข้าไปโหวตคะแนน</button>';
                             } else {
                                 status = 'สถานะ : <button type="submit" disabled class="btn btn-danger">close</button></form>';
-                                form = '<a href="login.php" class="btn btn-primary waves-effect waves-light disabled">เข้าไปโหวตคะแนน</a>';
+                                form = '<a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light disabled">เข้าไปโหวตคะแนน</a>';
                             }
                             $("#election_status").append(status);
                             $("#vote_button").append(form);

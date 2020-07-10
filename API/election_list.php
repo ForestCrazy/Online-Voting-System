@@ -1,7 +1,7 @@
 <?php
 require_once("../_system/config.php");
 require_once("../_system/database.php");
-$datenow = date("Y-m-05 H:i:s");
+$datenow = date("Y-m-d H:i:s");
 if (isset($_GET["keyword"])) {
     $keyword = mysqli_real_escape_string($connect, $_GET["keyword"]);
     if ($_GET["keyword"] == "" || $_GET["keyword"] == "NULL" || $_GET["keyword"] == NULL) {
@@ -18,7 +18,7 @@ $num_votelist = mysqli_num_rows($res_votelist);
 $loopround = 0;
 $resultArray = array();
 while($result = mysqli_fetch_array($res_votelist,MYSQLI_ASSOC)){
-    $datetime1 = new DateTime(date("Y-m-05 H:i:s"));
+    $datetime1 = new DateTime(date("Y-m-d H:i:s"));
     if ($result["announcement_time"] <= $datenow) {
         $datetimefor2 = $result["announcement_time"];
         $format_date = "NULL";
