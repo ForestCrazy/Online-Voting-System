@@ -1,7 +1,7 @@
 <?php
 require_once("_system/config.php");
 require_once("_system/database.php");
-$datenow = date("Y-m-07 H:i:s");
+$datenow = date("Y-m-d H:i:s");
 ?>
 <!DOCTYPE html>
 <html lang="th">
