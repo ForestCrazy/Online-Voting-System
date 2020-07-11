@@ -46,12 +46,12 @@ $datenow = date("Y-m-d H:i:s");
         }
         if ($_GET["page"] == "home") {
             include_once __DIR__ . '/_page/home.php';
-        } elseif ($_GET['page'] == "features") {
-            include_once __DIR__ . '/_page/features.php';
         } elseif ($_GET['page'] == "detail") {
             include_once __DIR__ . '/_page/detail.php';
         } elseif ($_GET['page'] == "vote") {
             include_once __DIR__ . '/_page/vote.php';
+        } elseif ($_GET['page'] == "result") {
+            include_once __DIR__ . '/_page/result.php';
         } else {
             echo '<div class="container"><div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i> ไม่พบหน้าที่ท่านร้องขอ กำลังพาท่านกลับไปหน้าหลัก...</div></div>';
             echo '<meta http-equiv="refresh" content="3;URL=?page=home"';

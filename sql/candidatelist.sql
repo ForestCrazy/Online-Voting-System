@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS `candidatelist` (
   `slogan` varchar(600) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `img` varchar(255),
+  `score` int(5) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
