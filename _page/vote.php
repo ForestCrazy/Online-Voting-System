@@ -79,7 +79,7 @@ if (!isset($_SESSION["username"])) { ?>
                             </thead>
                             <tbody>
                                 <?php
-                                $election_id = $_POST["election_id"];
+                                $election_id = mysqli_real_escape_string($connect, $_POST["election_id"]);
                                 $sql_candidatelist = 'SELECT * FROM candidatelist WHERE election_id = "' . $election_id . '"';
                                 $res_candidatelist = mysqli_query($connect, $sql_candidatelist);
                                 while ($fetchcandidatelist = mysqli_fetch_assoc($res_candidatelist)) {
