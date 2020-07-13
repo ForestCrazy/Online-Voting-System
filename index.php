@@ -52,6 +52,8 @@ $datenow = date("Y-m-d H:i:s");
             include_once __DIR__ . '/_page/vote.php';
         } elseif ($_GET['page'] == "result") {
             include_once __DIR__ . '/_page/result.php';
+        } elseif ($_GET['page'] == "login") {
+            include_once __DIR__ . '/_page/login.php';
         } else {
             echo '<div class="container"><div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i> ไม่พบหน้าที่ท่านร้องขอ กำลังพาท่านกลับไปหน้าหลัก...</div></div>';
             echo '<meta http-equiv="refresh" content="3;URL=?page=home"';
