@@ -21,10 +21,6 @@ if (isset($_SESSION["username"])) { ?>
                         <input type="hidden" name="submit_login">
                         <button type="submit" class="btn btn-success">Login</button>
                     </form>
-                    <br>
-                    <div class="card-text">
-                        ยังไม่มีบัญชี? <a href="?page=register" class="card-link">คลิกเพื่อไปหน้าสมัครบัญชี</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -32,21 +28,35 @@ if (isset($_SESSION["username"])) { ?>
     <?php
     if (isset($_POST["submit_login"])) {
         $username = mysqli_real_escape_string($connect, $_POST["username"]);
-        $password = mysqli_real_escape_string($connect, $_POST["password"]);
-        $sql_checkuser = 'SELECT password FROM account WHERE username = "'. $username .'"';
+        $sql_checkuser = 'SELECT username,password FROM account WHERE username = "' . $username . '"';
         $res_checkuser = mysqli_query($connect, $sql_checkuser);
-        $fetch_checkuser = mysqli_fetch_assoc($res_checkuser);
         $num_checkuser = mysqli_num_rows($res_checkuser);
         if ($num_checkuser > 0) {
-            if ($fetch_checkuser["password"] == $password) {
+            $shapassword = hash('sha256', $_POST['password']);
+            $fetch_checkuser = mysqli_fetch_assoc($res_checkuser);
+            if ($shapassword == $fetch_checkuser["password"]) {
+                $_SESSION["username"] = $fetch_checkuser["username"];
+                $msg_alert = 'สำเร็จ!';
+                $alert = 'success';
                 $msg = 'ล็อกอินสำเร็จ';
             } else {
-                $msg = 'รหัสผ่านไม่ถูกต้อง';
+                $msg = 'รหัสผ่านไม่ถูกต้อง!';
+                $alert = 'error';
+                $msg_alert = 'เกิดข้อผิดพลาด!';
             }
         } else {
             $msg = 'ไม่พบชื่อผู้ใช้นี้ในระบบ';
-        }
-        
-    }
-    ?>
-<?php } ?>
+            $alert = 'error';
+            $msg_alert = 'เกิดข้อผิดพลาด!';
+        } ?>
+        <script>
+            Swal.fire(
+                '<?php echo $msg_alert ?>',
+                '<?php echo $msg ?>',
+                '<?php echo $alert ?>'
+            ).then((value) => {
+                window.location.href = window.location.href;
+            });
+        </script>
+    <?php }
+} ?>

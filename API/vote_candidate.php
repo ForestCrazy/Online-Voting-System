@@ -3,9 +3,9 @@ require_once("../_system/config.php");
 require_once("../_system/database.php");
 $resultarray = array();
 $result = array();
-$_GET["username"] = 'Admin2';
+$_GET["username"] = $_SESSION["username"];
 if (isset($_GET["candidate_id"]) && isset($_GET["election_id"]) && isset($_GET["username"])) {
-    $username = mysqli_real_escape_string($connect, $_GET["username"]);
+    $username = mysqli_real_escape_string($connect, $_SESSION["username"]);
     $candidate_id = mysqli_real_escape_string($connect, $_GET["candidate_id"]);
     $election_id = mysqli_real_escape_string($connect, $_GET["election_id"]);
     $sql_checkvote = 'SELECT id FROM votelog WHERE username = "'. $username .'" AND election_id = "'. $election_id .'"';

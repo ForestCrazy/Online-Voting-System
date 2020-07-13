@@ -17,6 +17,14 @@
             <li class="nav-item">
                 <a class="nav-link" href="./">หน้าหลัก</a>
             </li>
+            <?php if (isset($_SESSION["username"])) { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="่javascript:void(0)"><?php echo $_SESSION["username"]; ?></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="?page=logout">ออกจากระบบ</a>
+                </li>
+            <?php } ?>
         </ul>
         <!-- Links -->
 
