@@ -1,6 +1,7 @@
 <?php
 require_once("_system/config.php");
 require_once("_system/database.php");
+require_once('_system/oop.php');
 $datenow = date("Y-m-d H:i:s");
 ?>
 <!DOCTYPE html>
@@ -15,7 +16,6 @@ $datenow = date("Y-m-d H:i:s");
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" type="text/css" rel="stylesheet">
     <link href="asset/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
     <script src="asset/js/jquery.js"></script>
-    <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.14.0/dist/sweetalert2.all.min.js"></script>
     <style>
         body {
@@ -35,8 +35,34 @@ $datenow = date("Y-m-d H:i:s");
 </head>
 
 <body>
-    <?php
-    include('_element/navbar.php'); ?>
+    <nav class="navbar navbar-expand-lg navbar-dark primary-color">
+        <a class="navbar-brand" href="./">Voting</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="./">หน้าหลัก</a>
+                </li>
+                <?php if (isset($_SESSION["username"])) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="่javascript:void(0)"><?php echo $_SESSION["username"]; ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?page=logout">ออกจากระบบ</a>
+                    </li>
+                <?php } ?>
+            </ul>
+            <form action="" method="GET" class="form-inline">
+                <div class="md-form my-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword" <?php if (isset($_GET["keyword"])) {
+                                                                                                            echo 'value="' . $_GET["keyword"] . '"';
+                                                                                                        } ?> aria-label="Search">
+                </div>
+            </form>
+        </div>
+    </nav>
     <div class="container" style="margin-bottom: 30px; margin-top: 30px;">
         <?php if (!$_GET) {
             $_GET["page"] = 'home';
@@ -61,10 +87,15 @@ $datenow = date("Y-m-d H:i:s");
             echo '<meta http-equiv="refresh" content="3;URL=?page=home"';
         } ?>
     </div>
-    <?php
-    include('_element/footer.php');
-    include('_element/script.php');
-    ?>
+    <br>
+    <footer class="font-small">
+        <div class="text-center py-3 blue">© <?php echo date("Y"); ?> Copyright:
+            <a href="https://mdbootstrap.com/" class="text-white"> MDBootstrap.com || Modifiled & Coding by ForestCrazy</a>
+        </div>
+    </footer>
+    <script src="asset/js/bootstrap.js"></script>
+    <script src="asset/js/mdb.js"></script>
+    <script src="asset/js/popper.js"></script>
 </body>
 
 </html>
