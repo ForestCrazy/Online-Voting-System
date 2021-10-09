@@ -36,6 +36,7 @@ if (isset($_SESSION["username"])) { ?>
             $fetch_checkuser = mysqli_fetch_assoc($res_checkuser);
             if ($shapassword == $fetch_checkuser["password"]) {
                 $_SESSION["username"] = $fetch_checkuser["username"];
+                $_SESSION['u_id'] = $fetch_checkuser['u_id'];
                 $msg_alert = 'สำเร็จ!';
                 $alert = 'success';
                 $msg = 'ล็อกอินสำเร็จ';
@@ -58,5 +59,5 @@ if (isset($_SESSION["username"])) { ?>
                 window.location.href = window.location.href;
             });
         </script>
-    <?php }
+<?php }
 } ?>
