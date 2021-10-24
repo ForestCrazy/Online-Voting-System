@@ -60,9 +60,9 @@ if (!isset($_SESSION["username"])) { ?>
                         <p class="section-description">แนะนำข้อมูลผู้สมัครโหวต/เลือกตั้ง</p>
                         <div class="row">
                             <?php
-                            $sql_candidatelist = 'SELECT * FROM candidatelist WHERE election_id = "'.$fetch_election_info["election_id"].'"';
-                            $res_candidatelist = mysqli_query($connect, $sql_candidatelist);
-                            while ($fetch_candidatelist = mysqli_fetch_assoc($res_candidatelist)) {
+                            $sql_candidate = 'SELECT * FROM candidate WHERE election_id = "'.$fetch_election_info["election_id"].'"';
+                            $res_candidate = mysqli_query($connect, $sql_candidate);
+                            while ($fetch_candidate = mysqli_fetch_assoc($res_candidate)) {
                             ?>
                             <!--Grid column-->
                             <div class="col col-sm-3 col-lg-3 col-md-3 mb-4">
@@ -74,19 +74,19 @@ if (!isset($_SESSION["username"])) { ?>
                                     <!--Avatar-->
                                     <div class="avatar mx-auto white">
                                         <a c_id="29" class="showview">
-                                            <img src="<?php echo $fetch_candidatelist['img']; ?>" class="rounded-circle img-fluid" width="60%" style="margin-top: 10px;">
+                                            <img src="<?php echo $fetch_candidate['img']; ?>" class="rounded-circle img-fluid" width="60%" style="margin-top: 10px;">
                                         </a>
                                     </div>
                                     <div class="card-body">
                                         <!--Name-->
                                         <h4 class="card-title mt-1">
-                                            <a c_id="29" class="showview"><?php echo $fetch_candidatelist["FirstName"] . ' ' . $fetch_candidatelist["LastName"]; ?></a>
+                                            <a c_id="29" class="showview"><?php echo $fetch_candidate["FirstName"] . ' ' . $fetch_candidate["LastName"]; ?></a>
                                         </h4>
                                         <hr>
                                         <!--Quotation-->
                                         <p>
-                                            หมายเลข : <font color="blue"><?php echo $fetch_candidatelist["cdd_id"]; ?></font><br>
-                                            <i class="fas fa-quote-left"></i> <?php echo $fetch_candidatelist["slogan"]; ?> <i class="fas fa-quote-right"></i></p>
+                                            หมายเลข : <font color="blue"><?php echo $fetch_candidate["cdd_id"]; ?></font><br>
+                                            <i class="fas fa-quote-left"></i> <?php echo $fetch_candidate["slogan"]; ?> <i class="fas fa-quote-right"></i></p>
                                     </div>
                                 </div>
                                 <!--Card-->

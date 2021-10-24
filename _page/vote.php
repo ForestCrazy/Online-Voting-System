@@ -3,20 +3,9 @@ if (!isset($_SESSION["username"])) { ?>
     <script langquage='javascript'>
         window.location = "?page=login";
     </script>
-<?php } else {
+    <?php } else {
     if (isset($_POST["election_id"])) { ?>
         <script type="text/javascript">
-            function alertbox(msg_title, msg_alert, icon, href) {
-                Swal.fire(
-                    msg_title,
-                    msg_alert,
-                    icon
-                ).then((value) => {
-                    if (href === 1) {
-                        window.location.href = '?page=home';
-                    }
-                });
-            }
             $(function() {
                 $("#submit_select_candidate").click(function() {
                     var selectcandidatebox = $(".selectcandidatebox:checked").val();
@@ -25,15 +14,14 @@ if (!isset($_SESSION["username"])) { ?>
                         url: "API/vote_candidate.php",
                         type: "GET",
                         data: "candidate_id=" + selectcandidatebox + "&election_id=" + election_id,
-                        dataType: "text", 
-                        success: function(result){
+                        dataType: "text",
+                        success: function(result) {
                             var object = jQuery.parseJSON(result);
-                            if(object != '')
-                            {
+                            if (object != '') {
                                 $.each(object, function(key, alertlabel) {
                                     alertbox(alertlabel["msg_title"], alertlabel["msg_alert"], alertlabel["icon"], alertlabel["href"]);
                                 });
-                            } 
+                            }
                         }
                     });
                 });
@@ -44,12 +32,11 @@ if (!isset($_SESSION["username"])) { ?>
                     $.ajax({
                         url: "API/vote_candidate.php",
                         type: "GET",
-                        data: "candidate_id=99999" + "&election_id=" + election_id + "&action=notwishtovote",
-                        dataType: "text", 
-                        success: function(data){
+                        data: "candidate_id=0" + "&election_id=" + election_id,
+                        dataType: "text",
+                        success: function(data) {
                             var object = jQuery.parseJSON(data);
-                            if(object != '')
-                            {
+                            if (object != '') {
                                 $.each(object, function(key, alertlabel) {
                                     alertbox(alertlabel["msg_title"], alertlabel["msg_alert"], alertlabel["icon"], alertlabel["href"]);
                                 });
@@ -80,17 +67,17 @@ if (!isset($_SESSION["username"])) { ?>
                             <tbody>
                                 <?php
                                 $election_id = mysqli_real_escape_string($connect, $_POST["election_id"]);
-                                $sql_candidatelist = 'SELECT * FROM candidatelist WHERE election_id = "' . $election_id . '"';
-                                $res_candidatelist = mysqli_query($connect, $sql_candidatelist);
-                                while ($fetchcandidatelist = mysqli_fetch_assoc($res_candidatelist)) {
+                                $sql_candidate = 'SELECT * FROM candidate WHERE election_id = "' . $election_id . '"';
+                                $res_candidate = mysqli_query($connect, $sql_candidate);
+                                while ($fetchcandidate = mysqli_fetch_assoc($res_candidate)) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $fetchcandidatelist["cdd_id"]; ?></td>
-                                        <td><img src="<?php echo $fetchcandidatelist["img"]; ?>" width="100%"></td>
-                                        <td><?php echo $fetchcandidatelist["FirstName"] . ' ' . $fetchcandidatelist["LastName"]; ?></td>
-                                        <td><?php echo $fetchcandidatelist["slogan"]; ?></td>
+                                        <td><?php echo $fetchcandidate["cdd_id"]; ?></td>
+                                        <td><img src="<?php echo $fetchcandidate["img"]; ?>" width="100%"></td>
+                                        <td><?php echo $fetchcandidate["FirstName"] . ' ' . $fetchcandidate["LastName"]; ?></td>
+                                        <td><?php echo $fetchcandidate["slogan"]; ?></td>
                                         <td align="center">
-                                            <input type="radio" class="selectcandidatebox" name="candidate_id" value="<?php echo $fetchcandidatelist["cdd_id"]; ?>" required>
+                                            <input type="radio" class="selectcandidatebox" name="candidate_id" value="<?php echo $fetchcandidate["cdd_id"]; ?>" required>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -109,5 +96,5 @@ if (!isset($_SESSION["username"])) { ?>
         <script langquage='javascript'>
             window.location = "?page=home";
         </script>
-    <?php } 
+<?php }
 } ?>

@@ -8,10 +8,10 @@ if (!isset($_POST["election_id"])) { ?>
     $sql_votelog = 'SELECT * FROM votelog WHERE election_id = "'. $election_id .'"';
     $res_votelog = mysqli_query($connect, $sql_votelog);
     $num_votelog = mysqli_num_rows($res_votelog);
-    $sql_candidatelist = 'SELECT * FROM candidatelist WHERE election_id = "' . $election_id . '" ORDER BY score DESC';
-    $res_candidatelist = mysqli_query($connect, $sql_candidatelist);
+    $sql_candidate = 'SELECT * FROM candidate WHERE election_id = "' . $election_id . '" ORDER BY score DESC';
+    $res_candidate = mysqli_query($connect, $sql_candidate);
     $allscore = 0;
-    while ($fetchscore = mysqli_fetch_assoc($res_candidatelist)) {
+    while ($fetchscore = mysqli_fetch_assoc($res_candidate)) {
         $allscore = $allscore + $fetchscore["score"];
     }
     $failedvote = $num_votelog - $allscore;
@@ -55,16 +55,16 @@ if (!isset($_POST["election_id"])) { ?>
                     </thead>
                     <tbody>
                         <?php
-                        $sql_candidatelist = 'SELECT * FROM candidatelist WHERE election_id = "' . $election_id . '" ORDER BY score DESC';
-                        $res_candidatelist = mysqli_query($connect, $sql_candidatelist);
-                        while ($fetchcandidatelist = mysqli_fetch_assoc($res_candidatelist)) {
+                        $sql_candidate = 'SELECT * FROM candidate WHERE election_id = "' . $election_id . '" ORDER BY score DESC';
+                        $res_candidate = mysqli_query($connect, $sql_candidate);
+                        while ($fetchcandidate = mysqli_fetch_assoc($res_candidate)) {
                         ?>
                             <tr>
-                                <td><?php echo $fetchcandidatelist["cdd_id"]; ?></td>
-                                <td><img src="<?php echo $fetchcandidatelist["img"]; ?>" width="100%"></td>
-                                <td><?php echo $fetchcandidatelist["FirstName"] . ' ' . $fetchcandidatelist["LastName"]; ?></td>
-                                <td><?php echo $fetchcandidatelist["slogan"]; ?></td>
-                                <td align="center"><?php echo $fetchcandidatelist["score"]; ?></td>
+                                <td><?php echo $fetchcandidate["cdd_id"]; ?></td>
+                                <td><img src="<?php echo $fetchcandidate["img"]; ?>" width="100%"></td>
+                                <td><?php echo $fetchcandidate["FirstName"] . ' ' . $fetchcandidate["LastName"]; ?></td>
+                                <td><?php echo $fetchcandidate["slogan"]; ?></td>
+                                <td align="center"><?php echo $fetchcandidate["score"]; ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
