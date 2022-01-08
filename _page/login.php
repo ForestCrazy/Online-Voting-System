@@ -28,7 +28,7 @@ if (isset($_SESSION["username"])) { ?>
     <?php
     if (isset($_POST["submit_login"])) {
         $username = mysqli_real_escape_string($connect, $_POST["username"]);
-        $sql_checkuser = 'SELECT username,password FROM account WHERE username = "' . $username . '"';
+        $sql_checkuser = 'SELECT id, username,password FROM account WHERE username = "' . $username . '"';
         $res_checkuser = mysqli_query($connect, $sql_checkuser);
         $num_checkuser = mysqli_num_rows($res_checkuser);
         if ($num_checkuser > 0) {
@@ -36,7 +36,7 @@ if (isset($_SESSION["username"])) { ?>
             $fetch_checkuser = mysqli_fetch_assoc($res_checkuser);
             if ($shapassword == $fetch_checkuser["password"]) {
                 $_SESSION["username"] = $fetch_checkuser["username"];
-                $_SESSION['u_id'] = $fetch_checkuser['u_id'];
+                $_SESSION['u_id'] = $fetch_checkuser['id'];
                 $msg_alert = 'สำเร็จ!';
                 $alert = 'success';
                 $msg = 'ล็อกอินสำเร็จ';
