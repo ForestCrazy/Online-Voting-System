@@ -13,7 +13,7 @@ if (!isset($_SESSION["username"])) { ?>
         <script>
             function ElectionInfo() {
                 $.ajax({
-                        url: "./API/election_status.php",
+                        url: "./API/election_detail.php",
                         type: "GET",
                         data: "keyword=<?php echo $fetch_election_info['election_id']; ?>"
                     })
