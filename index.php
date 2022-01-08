@@ -60,6 +60,7 @@ $datenow = date("Y-m-d H:i:s");
             </ul>
             <form action="" method="GET" class="form-inline">
                 <div class="md-form my-0">
+                    <input type='hidden' name='page' value='search'/>
                     <input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword" <?php if (isset($_GET["keyword"])) {
                                                                                                             echo 'value="' . $_GET["keyword"] . '"';
                                                                                                         } ?> aria-label="Search">
@@ -70,6 +71,9 @@ $datenow = date("Y-m-d H:i:s");
     <div class="container" style="margin-bottom: 30px; margin-top: 30px;">
         <?php if (!$_GET) {
             $_GET["page"] = 'home';
+        }
+        if (!isset($_GET['page'])) {
+            $_GET['page'] = 'home';
         }
         if (!$_GET["page"]) {
             $_GET["page"] = "home";
