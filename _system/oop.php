@@ -11,7 +11,7 @@ function gotoPage($page)
 function isAdmin($u_id)
 {
     global $connect;
-    $sql_account = 'SELECT role FROM account WHERE u_id = "' . $u_id . '"';
+    $sql_account = 'SELECT role FROM account WHERE id = "' . $u_id . '"';
     $res_account = mysqli_query($connect, $sql_account);
     if ($res_account) {
         if (mysqli_num_rows($res_account) == 1) {
