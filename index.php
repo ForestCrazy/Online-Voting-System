@@ -52,6 +52,10 @@ $datenow = date("Y-m-d H:i:s");
                     <li class="nav-item">
                         <a class="nav-link" href="?page=logout">ออกจากระบบ</a>
                     </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?page=login">เข้าสู่ระบบ</a>
+                    </li>
                 <?php } ?>
             </ul>
             <form action="" method="GET" class="form-inline">
