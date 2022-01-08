@@ -15,7 +15,6 @@ $datenow = date("Y-m-d H:i:s");
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="asset/js/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.14.0/dist/sweetalert2.all.min.js"></script>
     <style>
         body {
@@ -47,7 +46,7 @@ $datenow = date("Y-m-d H:i:s");
                 </li>
                 <?php if (isset($_SESSION["username"])) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="่javascript:void(0)"><?php echo $_SESSION["username"]; ?></a>
+                        <div class="nav-link"><?php echo $_SESSION["username"]; ?></div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="?page=logout">ออกจากระบบ</a>
