@@ -48,6 +48,15 @@ $datenow = date("Y-m-d H:i:s");
                     <li class="nav-item">
                         <div class="nav-link"><?php echo $_SESSION["username"]; ?></div>
                     </li>
+                    <?php
+                    if (isAdmin($_SESSION['u_id'])) {
+                        ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="?page=admin">จัดการระบบ</a>
+                        </li>
+                        <?php
+                    }
+                    ?>
                     <li class="nav-item">
                         <a class="nav-link" href="?page=logout">ออกจากระบบ</a>
                     </li>
@@ -91,7 +100,7 @@ $datenow = date("Y-m-d H:i:s");
             include_once __DIR__ . '/_page/logout.php';
         } else {
             echo '<div class="container"><div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i> ไม่พบหน้าที่ท่านร้องขอ กำลังพาท่านกลับไปหน้าหลัก...</div></div>';
-            echo '<meta http-equiv="refresh" content="3;URL=?page=home"';
+            echo '<meta http-equiv="refresh" content="3;URL=?page=home"/>';
         } ?>
     </div>
     <br>
