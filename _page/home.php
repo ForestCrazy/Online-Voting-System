@@ -1,43 +1,104 @@
 <script>
+    var electionList = null
+
     function ElectionList() {
-        $.ajax({
-                url: "./API/election_list.php",
-                type: "GET",
-                data: "keyword=<?php if (isset($_GET["keyword"])) { echo $_GET["keyword"]; } ?>"
-            })
-            .done(function(result) {
-                var object = jQuery.parseJSON(result);
-                if (object != '') {
-                    $("#election_list").empty();
-                    $.each(object, function(key, val) {
-                        card = '<div class="col-lg-4"><div class="card">';
-                        card = card + '<img class="card-img-top" src="' + val["img"] + '" alt="' + val["title"] + '">';
-                        card = card + '<div class="card-body"><h5 class="card-title">' + val["title"] + '</h5><div class="card-text">' + val["description"] + '</div></div>';
-                        cardfoot1 = '<div class="card-footer text-right"><small class="text-muted">' + val["format_date"] + val["cooldown"] + '</small></div>';
-                        cardfoot2 = '<div class="card-footer text-right"><small class="text-muted">' + val["start_time"] + ' - ' + val["end_time"] + '</small></div>';
-                        cardfoot3 = '<div class="card-footer text-right"><small class="text-muted">&emsp;</small></div>';
-                        if (val["html"] === "1") {
-                            htmlform = '<form action="?page=result" method="post"><input type="hidden" name="election_id" value="' + val["election_id"] + '"><button type="submit" class="btn btn-success">คลิกเพื่อไปดูผลโหวต</button></form>';
-                            cardfoot = cardfoot2 + cardfoot3;
-                        } else if (val["html"] === "2") {
-                            htmlform = '<form action="?page=result" method="post"><input type="hidden" name="election_id" value="' + val["election_id"] + '"><button type="submit" class="btn btn-danger">ในขณะนี้ระบบปิดแล้ว</button></form>';
-                            cardfoot = cardfoot1 + cardfoot2;
-                        } else if (val["html"] === "3") {
-                            htmlform = '<form action="?page=detail" method="post"><input type="hidden" name="election_id" value="' + val["election_id"] + '"><button type="submit" class="btn btn-primary">คลิกเพื่อไปโหวต</button>';
-                            cardfoot = cardfoot1 + cardfoot2;
-                        } else {
-                            htmlform = '<form action="?page=detail" method="post"><input type="hidden" name="election_id" value="' + val["election_id"] + '"><button type="submit" class="btn btn-warning">ระบบยังไม่เปิดในขณะนี้</button></form>';
-                            cardfoot = cardfoot1 + cardfoot2;
-                        }
-                        card = card + htmlform;
-                        card = card + cardfoot;
-                        card = card + '</div></div>';
-                        $("#election_list").append(card);
-                    });
+        const urlParams = new URLSearchParams(window.location.search);
+        const keyword = urlParams.get('keyword');
+        $.get({
+            url: '/API/election_list.php',
+            data: {
+                keyword: keyword
+            }
+        }).done((response) => {
+            const cacheElectionList = electionList;
+            try {
+                electionList = JSON.parse(response);
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+            if (electionList.length >= 1) {
+                $('#election_list').empty();
+                if (cacheElectionList) {
+                    if (cacheElectionList.length >= 1) {
+                        cacheElectionList.forEach((election) => {
+                            clearInterval(election.interval);
+                        })
+                    }
                 }
-            });
+            }
+
+            function electionComponent(election) {
+                $('#election_list').append('<div class="col-lg-4"><div class="card"><img class="card-img-top" src="' + election.img.src + '" alt="' + election.img.alt + '"><div class="card-body"><h5 class="card-title">' + election.title + '</h5><div class="card-text">' + election.description + '</div></div><a class="text-center" href="?page=election&election=' + election.election_id + '"><button class="btn btn-' + election.btn.class + ' col-10">' + election.btn.text + '</button></a><div class="card-footer text-right"><small class="text-muted">' + election.footer.state + '<div class="inline" id="election-countdown-' + election.election_id + '"</small></div></div></div>')
+            }
+
+            function electionCountdown(electionId, timeCountdown) {
+                if (timeCountdown) {
+                    const countDownTime = new Date(timeCountdown).getTime();
+                    const currentTime = new Date().getTime();
+                    const timeRemaining = countDownTime - currentTime;
+
+                    var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                    if (timeRemaining < 0) {
+                        ElectionList();
+                    } else {
+                        const electionCountdown = days + " วัน " + String(hours).padStart(2, "0") + " ชั่วโมง " + String(minutes).padStart(2, "0") + " นาที " + String(seconds).padStart(2, "0") + " วินาที";
+                        $('#election-countdown-' + electionId).text(electionCountdown);
+                        // console.log(electionCountdown);
+                    }
+                }
+            }
+            electionList.forEach((election) => {
+                let timeCountdown, btnClass, btnText, footerState = null;
+                switch (election.election_state) {
+                    case 1:
+                        timeCountdown = election.start_time;
+                        btnClass = 'warning';
+                        btnText = 'ระบบยังไม่เปิดให้ลงคะแนนในขณะนี้';
+                        footerState = 'จะเปิดการลงคะแนนใน ';
+                        break;
+                    case 2:
+                        timeCountdown = election.end_time;
+                        btnClass = 'primary';
+                        btnText = 'คลิกเพื่อไปลงคะแนน';
+                        footerState = 'จะปิดการลงคะแนนใน ';
+                        break;
+                    case 3:
+                        timeCountdown = election.announcement_time;
+                        btnClass = 'danger';
+                        btnText = 'ระบบปิดการลงคะแนนแล้ว';
+                        footerState = 'จะประกาศผลคะแนนใน ';
+                        break;
+                    case 4:
+                        timeCountdown = false;
+                        btnClass = 'success';
+                        btnText = 'คลิกเพื่อดูผลคะแนน';
+                        break;
+                }
+                election.img = {
+                    src: election.img,
+                    alt: election.title
+                }
+                election.btn = {
+                    class: btnClass,
+                    text: btnText
+                }
+                election.footer = {
+                    state: footerState
+                }
+                electionComponent(election);
+                election.interval = setInterval(electionCountdown, 1000, election.election_id, timeCountdown);
+            })
+        })
     }
-    ElectionList()
-    setInterval(ElectionList, 5000); // 1000 = 1 second
+
+    $(document).ready(() => {
+        ElectionList();
+        setInterval(ElectionList, 1000 * 60);
+    })
 </script>
 <div class="row" id="election_list"></div>
