@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `election` (
   `start_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `end_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `announcement_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `hidden_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `img` varchar(255),
   PRIMARY KEY (`election_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
