@@ -1,0 +1,25 @@
+.placeholder-black:-ms-input-placeholder {
+    color: black;
+}
+
+.placeholder-black::-ms-input-placeholder {
+    color: black;
+}
+
+.placeholder-black::placeholder {
+    color: black;
+    opacity: 1;
+}
+
+.placeholder-white:-ms-input-placeholder {
+    color: white;
+}
+
+.placeholder-white::-ms-input-placeholder {
+    color: white;
+}
+
+.placeholder-white::placeholder {
+    color: white;
+    opacity: 1;
+}
