@@ -14,6 +14,7 @@ $datenow = date("Y-m-d H:i:s");
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" type="text/css" rel="stylesheet">
+    <link href="./asset/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.14.0/dist/sweetalert2.all.min.js"></script>
     <style>
@@ -50,11 +51,11 @@ $datenow = date("Y-m-d H:i:s");
                     </li>
                     <?php
                     if (isAdmin($_SESSION['u_id'])) {
-                        ?>
+                    ?>
                         <li class="nav-item">
                             <a class="nav-link" href="?page=admin">จัดการระบบ</a>
                         </li>
-                        <?php
+                    <?php
                     }
                     ?>
                     <li class="nav-item">
@@ -66,14 +67,9 @@ $datenow = date("Y-m-d H:i:s");
                     </li>
                 <?php } ?>
             </ul>
-            <form action="" method="GET" class="form-inline">
-                <div class="md-form my-0">
-                    <input type='hidden' name='page' value='search'/>
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" name="keyword" <?php if (isset($_GET["keyword"])) {
-                                                                                                            echo 'value="' . $_GET["keyword"] . '"';
-                                                                                                        } ?> aria-label="Search">
-                </div>
-            </form>
+            <div class="form-inline md-form my-0">
+                <input class="mr-sm-2 placeholder-white" type="text" placeholder="Search" name="keyword" aria-label="Search">
+            </div>
         </div>
     </nav>
     <div class="container" style="margin-bottom: 30px; margin-top: 30px;">
