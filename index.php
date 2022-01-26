@@ -72,7 +72,7 @@ $datenow = date("Y-m-d H:i:s");
             </div>
         </div>
     </nav>
-    <div class="container" style="margin-bottom: 30px; margin-top: 30px;">
+    <div class="container-md" style="margin-bottom: 30px; margin-top: 30px;">
         <?php if (!$_GET) {
             $_GET["page"] = 'home';
         }
