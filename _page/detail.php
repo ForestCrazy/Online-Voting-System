@@ -4,8 +4,8 @@ if (!isset($_SESSION["username"])) { ?>
         window.location = "?page=login";
     </script>
 <?php } else {
-    if (isset($_POST["election_id"])) { 
-        $e_id = mysqli_real_escape_string($connect, $_POST["election_id"]);
+    if (isset($_GET["election_id"])) { 
+        $e_id = mysqli_real_escape_string($connect, $_GET["election_id"]);
         $sql_election_info = 'SELECT * FROM election WHERE election_id = "'. $e_id .'"';
         $res_election_info = mysqli_query($connect, $sql_election_info);
         $fetch_election_info = mysqli_fetch_assoc($res_election_info);
