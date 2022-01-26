@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION["u_id"])) { ?>
-    <script langquage='javascript'>
+    <script language='javascript'>
         window.location = "?page=login";
     </script>
 <?php } else {
@@ -101,7 +101,7 @@ if (!isset($_SESSION["u_id"])) { ?>
             </div>
         </div>
     <?php } else { ?>
-        <script langquage='javascript'>
+        <script language='javascript'>
             window.location = "?page=home";
         </script>
     <?php } 
