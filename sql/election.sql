@@ -5,9 +5,9 @@ SET time_zone = "+07:00";
 
 CREATE TABLE IF NOT EXISTS `election` (
   `election_id` int(5) ZEROFILL NOT NULL AUTO_INCREMENT,
-  `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `title` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci,
   `description` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `detail` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `detail` varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `start_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `end_time` datetime DEFAULT CURRENT_TIMESTAMP,
