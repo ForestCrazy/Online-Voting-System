@@ -15,15 +15,16 @@ function electionState($election)
     return $electionState;
 }
 $sql_votelist = 'SELECT * FROM election WHERE hidden_time >= NOW()';
+$specificElectionSearch = false;
 if (isset($_GET["keyword"])) {
     $keyword = mysqli_real_escape_string($connect, $_GET["keyword"]);
-    if (!$_GET["keyword"] == "" || !$_GET["keyword"] == "NULL" || !$_GET["keyword"] == NULL) {
+    if ($_GET["keyword"] != "" && $_GET["keyword"] != "NULL" && $_GET["keyword"] != NULL) {
         $sql_votelist = 'SELECT * FROM election WHERE hidden_time >= NOW() AND (election_id LIKE "%' . $keyword . '%" OR title LIKE "%' . $keyword . '%" OR description = "%' . $keyword . '%")';
         $specificElectionSearch = true;
     }
 } else if ($_GET["election_id"]) {
     $election_id = mysqli_real_escape_string($connect, $_GET["election_id"]);
-    if (!$_GET["election_id"] == "" || !$_GET["election_id"] == "NULL" || !$_GET["election_id"] == NULL) {
+    if ($_GET["election_id"] != "" && $_GET["election_id"] != "NULL" && $_GET["election_id"] != NULL) {
         $sql_votelist = 'SELECT * FROM election WHERE election_id = "' . $election_id . '"';
         $specificElectionSearch = true;
     }
