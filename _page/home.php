@@ -1,13 +1,11 @@
 <script>
-    var electionList = null
+    var electionList, searchElectionKeyword = null
 
     function ElectionList() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const keyword = urlParams.get('keyword');
         $.get({
             url: '/API/election_list.php',
             data: {
-                keyword: keyword
+                keyword: searchElectionKeyword
             }
         }).done((response) => {
             const cacheElectionList = electionList;
