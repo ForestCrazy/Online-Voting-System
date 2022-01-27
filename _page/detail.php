@@ -38,6 +38,10 @@ if (!isset($_SESSION["u_id"])) { ?>
             const urlParams = new URLSearchParams(window.location.search);
             const electionId = urlParams.get('election_id');
 
+            function candidateComponent(candidate) {
+                $('#candidate_list').append('<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"><div class="card testimonial-card"><div class="card-up teal lighten-2"></div><div class="avatar mx-auto white"><img src="' + candidate.img + '" class="rounded-circle img-fluid" width="60%" style="margin-top: 10px;"></div><div class="card-body"><h4 class="card-title mt-1">' + candidate.FirstName + ' ' + candidate.LastName + '</h4><hr><div>หมายเลข : <div class="text-primary d-inline">' + candidate.cdd_id + '</div></div><i class="fas fa-quote-left"></i> ' + candidate.slogan + ' <i class="fas fa-quote-right"></i></div></div></div>');
+            }
+
             function ElectionInfo() {
                 $.get({
                     url: '/API/election.php',
@@ -60,10 +64,17 @@ if (!isset($_SESSION["u_id"])) { ?>
                     } else {
                         $('#election_status').html('สถานะ : <button type="submit" disabled class="btn btn-danger">close</button></form>');
                     }
+                    $('#candidate_list').empty();
+                    electionDetail.candidate.forEach((candidate) => {
+                        candidateComponent(candidate);
+                    })
                 })
             }
-            ElectionInfo()
-            setInterval(ElectionInfo, 5000); // 1000 = 1 second
+            
+            $(document).ready(() => {
+                ElectionInfo()
+                setInterval(ElectionInfo, 1000 * 60);
+            })
         </script>
         <div class="container">
             <div class="row">
@@ -86,46 +97,11 @@ if (!isset($_SESSION["u_id"])) { ?>
                         <h2 class="section-heading h1 pt-4">รายชื่อผู้สมัคร</h2>
                         <!--Section description-->
                         <p class="section-description">แนะนำข้อมูลผู้สมัครโหวต/เลือกตั้ง</p>
-                        <div class="row">
-                            <?php
-                            $sql_candidate = 'SELECT * FROM candidate WHERE election_id = "' . $fetch_election_info["election_id"] . '"';
-                            $res_candidate = mysqli_query($connect, $sql_candidate);
-                            while ($fetch_candidate = mysqli_fetch_assoc($res_candidate)) {
-                            ?>
-                                <!--Grid column-->
-                                <div class="col col-sm-3 col-lg-3 col-md-3 mb-4">
-                                    <!--Card-->
-                                    <div class="card testimonial-card">
-                                        <!--Background color-->
-                                        <div class="card-up teal lighten-2">
-                                        </div>
-                                        <!--Avatar-->
-                                        <div class="avatar mx-auto white">
-                                            <a c_id="29" class="showview">
-                                                <img src="<?php echo $fetch_candidate['img']; ?>" class="rounded-circle img-fluid" width="60%" style="margin-top: 10px;">
-                                            </a>
-                                        </div>
-                                        <div class="card-body">
-                                            <!--Name-->
-                                            <h4 class="card-title mt-1">
-                                                <a c_id="29" class="showview"><?php echo $fetch_candidate["FirstName"] . ' ' . $fetch_candidate["LastName"]; ?></a>
-                                            </h4>
-                                            <hr>
-                                            <!--Quotation-->
-                                            <p>
-                                                หมายเลข : <font color="blue"><?php echo $fetch_candidate["cdd_id"]; ?></font><br>
-                                                <i class="fas fa-quote-left"></i> <?php echo $fetch_candidate["slogan"]; ?> <i class="fas fa-quote-right"></i>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!--Card-->
-                                </div>
-                                <!--Grid column-->
-                            <?php } ?>
+                        <div class="row" id="candidate_list">
+                            
                         </div>
                         <div class="d-flex justify-content-center" id="vote_button"></div>
                     </section>
-                    <!--Section: Testimonials v.1-->
                 </div>
             </div>
         </div>
