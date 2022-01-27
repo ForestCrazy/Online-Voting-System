@@ -14,6 +14,16 @@ function electionState($election)
     }
     return $electionState;
 }
+function candidateElection($election_id) {
+    global $connect;
+    $sql_candidate = 'SELECT cdd_id, FirstName, LastName, slogan, img FROM candidate WHERE election_id = "' . $election_id . '" ORDER BY cdd_id ASC';
+    $res_candidate = mysqli_query($connect, $sql_candidate);
+    $candidateArray = array();
+    while ($fetch_candidate = mysqli_fetch_assoc($res_candidate)) {
+        array_push($candidateArray, $fetch_candidate);
+    }
+    return $candidateArray;
+}
 $sql_votelist = 'SELECT * FROM election WHERE hidden_time >= NOW()';
 $specificElectionSearch = false;
 if (isset($_GET["keyword"])) {
@@ -33,11 +43,13 @@ $resElectionList = mysqli_query($connect, $sql_votelist);
 if ($specificElectionSearch) {
     $fetchElection = mysqli_fetch_assoc($resElectionList);
     $fetchElection["election_state"] = electionState($fetchElection);
+    $fetchElection["candidate"] = candidateElection($fetchElection["election_id"]);
     echo json_encode($fetchElection);
 } else {
     $electionArray = array();
     while ($fetchElection = mysqli_fetch_assoc($resElectionList)) {
         $fetchElection["election_state"] = electionState($fetchElection);
+        $fetchElection["candidate"] = candidateElection($fetchElection["election_id"]);
         array_push($electionArray, $fetchElection);
     }
     echo json_encode($electionArray);
