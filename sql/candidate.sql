@@ -4,7 +4,6 @@ START TRANSACTION;
 SET time_zone = "+07:00";
 
 CREATE TABLE IF NOT EXISTS `candidate` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
   `election_id` int(5) ZEROFILL NOT NULL,
   `cdd_id` int(5) NOT NULL,
   `FirstName` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci,
@@ -12,6 +11,6 @@ CREATE TABLE IF NOT EXISTS `candidate` (
   `slogan` varchar(600) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `img` varchar(255),
-  `score` int(5) NOT NULL,
+  `score` int(5) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
