@@ -1,9 +1,7 @@
 <?php
-if (!isset($_SESSION["u_id"])) { ?>
-    <script language='javascript'>
-        window.location = "?page=login";
-    </script>
-    <?php } else {
+if (!isset($_SESSION["u_id"])) {
+    gotoPage('home');
+} else {
     if (isset($_GET["election_id"])) {
         $e_id = mysqli_real_escape_string($connect, $_GET["election_id"]);
         $sql_election_info = 'SELECT * FROM election WHERE election_id = "' . $e_id . '"';
@@ -58,9 +56,10 @@ if (!isset($_SESSION["u_id"])) { ?>
                     $('#election_title').text(electionDetail.title);
                     $('#election_detail').text(electionDetail.detail);
                     $('#election_time1').text(DateThai(electionDetail.start_time) + ' น.');
-                    $('#election_time2').text(DateThai(electionDetail.end_time)+ ' น.');
+                    $('#election_time2').text(DateThai(electionDetail.end_time) + ' น.');
                     if (electionDetail.election_state === 2) {
                         $('#election_status').html('สถานะ : <button type="submit" disabled class="btn btn-success">open</button>');
+                        $('#vote_button').removeClass('d-none');
                     } else {
                         $('#election_status').html('สถานะ : <button type="submit" disabled class="btn btn-danger">close</button></form>');
                     }
@@ -70,7 +69,7 @@ if (!isset($_SESSION["u_id"])) { ?>
                     })
                 })
             }
-            
+
             $(document).ready(() => {
                 ElectionInfo()
                 setInterval(ElectionInfo, 1000 * 60);
@@ -91,23 +90,16 @@ if (!isset($_SESSION["u_id"])) { ?>
             </div>
             <div class="row">
                 <div class="col">
-                    <!--Section: Testimonials v.1-->
                     <section class="section pb-3 text-center">
-                        <!--Section heading-->
                         <h2 class="section-heading h1 pt-4">รายชื่อผู้สมัคร</h2>
-                        <!--Section description-->
                         <p class="section-description">แนะนำข้อมูลผู้สมัครโหวต/เลือกตั้ง</p>
-                        <div class="row" id="candidate_list">
-                            
-                        </div>
-                        <div class="d-flex justify-content-center" id="vote_button"></div>
+                        <div class="row" id="candidate_list"></div>
+                        <div class="d-flex justify-content-center d-none" id="vote_button"><button class="btn btn-primary" onclick="windows.location = '?page=election&election_id=00001'">ไปลงคะแนน</button></div>
                     </section>
                 </div>
             </div>
         </div>
-    <?php } else { ?>
-        <script language='javascript'>
-            window.location = "?page=home";
-        </script>
-<?php }
+    <?php } else {
+        gotoPage('home');
+    }
 } ?>
