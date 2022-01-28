@@ -8,6 +8,10 @@ footer {
     width: 100%;
 }
 
+.candidate-img {
+    max-height: 6rem;
+}
+
 [class*="col-"] {
     margin-bottom: 30px;
 }
