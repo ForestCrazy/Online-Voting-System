@@ -27,7 +27,7 @@
             }
 
             function electionComponent(election) {
-                $('#election_list').append('<div class="col-md-6 col-lg-6 col-xl-4"><div class="card"><img class="card-img-top" src="' + election.img.src + '" alt="' + election.img.alt + '"><div class="card-body"><h5 class="card-title">' + election.title + '</h5><div class="card-text">' + election.description + '</div></div><a class="text-center" href="?page=detail&election_id=' + election.election_id + '"><button class="btn btn-' + election.btn.class + ' col-10 px-2">' + election.btn.text + '</button></a><div class="card-footer text-right"><small class="text-muted">' + election.footer.state + '<div class="d-inline" id="election-countdown-' + election.election_id + '"</small></div></div></div>');
+                $('#election_list').append('<div class="col-md-6 col-lg-6 col-xl-4"><div class="card"><img class="card-img-top" src="' + election.img.src + '" alt="' + election.img.alt + '"><div class="card-body"><h5 class="card-title">' + election.title + '</h5><div class="card-text">' + election.description + '</div></div><a class="text-center" href="?page=detail&election_id=' + election.election_id + '"><button class="btn btn-' + election.btn.class + ' col-10 px-2">' + election.btn.text + '</button></a><div class="card-footer text-right"><small class="text-muted">' + election.footer.state + '<div class="d-inline" id="election-countdown-' + election.election_id + '"></div></small></div></div></div>');
             }
 
             function electionCountdown(electionId, timeCountdown) {
@@ -75,6 +75,7 @@
                         timeCountdown = false;
                         btnClass = 'success';
                         btnText = 'คลิกเพื่อดูผลคะแนน';
+                        footerState = '';
                         break;
                 }
                 election.img = {
@@ -89,7 +90,7 @@
                     state: footerState
                 }
                 electionComponent(election);
-                election.interval = setInterval(electionCountdown, 1000, election.election_id, timeCountdown);
+                election.interval = timeCountdown ? setInterval(electionCountdown, 1000, election.election_id, timeCountdown) : null;
             })
         })
     }
