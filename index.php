@@ -19,21 +19,6 @@ $datenow = date("Y-m-d H:i:s");
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.14.0/dist/sweetalert2.all.min.js"></script>
     <script src="https://kit.fontawesome.com/b94fe2fbf1.js" crossorigin="anonymous"></script>
     <script src="./asset/js/main.js"></script>
-    <style>
-        body {
-            font-family: 'Kanit', sans-serif;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        [class*="col-"] {
-            margin-bottom: 30px;
-        }
-    </style>
 </head>
 
 <body>

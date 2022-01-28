@@ -1,3 +1,17 @@
+body {
+    font-family: "Kanit", sans-serif;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+[class*="col-"] {
+    margin-bottom: 30px;
+}
+
 .placeholder-black:-ms-input-placeholder {
     color: black;
 }
