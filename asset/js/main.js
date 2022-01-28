@@ -17,3 +17,8 @@ function DateThai(date) {
         second: 'numeric',
     })
 }
+
+function getUrlParams(parameter) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(parameter);
+}
