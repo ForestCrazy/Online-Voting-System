@@ -7,7 +7,7 @@ if (!isset($_SESSION["u_id"])) {
         $sql_election_info = 'SELECT * FROM election WHERE election_id = "' . $e_id . '"';
         $res_election_info = mysqli_query($connect, $sql_election_info);
         $fetch_election_info = mysqli_fetch_assoc($res_election_info);
-    ?>
+?>
         <script>
             // $.ajax({
             //             url: "./API/election_detail.php",
@@ -33,8 +33,7 @@ if (!isset($_SESSION["u_id"])) {
             //             }
             //         });
             var electionDetail = null;
-            const urlParams = new URLSearchParams(window.location.search);
-            const electionId = urlParams.get('election_id');
+            const electionId = getUrlParams('election_id');
 
             function candidateComponent(candidate) {
                 $('#candidate_list').append('<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"><div class="card testimonial-card"><div class="card-up teal lighten-2"></div><div class="avatar mx-auto white"><img src="' + candidate.img + '" class="rounded-circle img-fluid" width="60%" style="margin-top: 10px;"></div><div class="card-body"><h4 class="card-title mt-1">' + candidate.FirstName + ' ' + candidate.LastName + '</h4><hr><div>หมายเลข : <div class="text-primary d-inline">' + candidate.cdd_id + '</div></div><i class="fas fa-quote-left"></i> ' + candidate.slogan + ' <i class="fas fa-quote-right"></i></div></div></div>');
@@ -75,31 +74,29 @@ if (!isset($_SESSION["u_id"])) {
                 setInterval(ElectionInfo, 1000 * 60);
             })
         </script>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <br>
-                    <h3 id="election_title"></h3>
-                    <p>รายละเอียดการโหวต :
-                    <div class="d-inline" id="election_detail"></div>
-                    </p>
-                    <b class="">เปิดระบบ <div class="d-inline text-primary" id="election_time1"></div> ถึง <div class="d-inline text-primary" id="election_time2"></div></b>
-                    <br>
-                    <div id="election_status"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <section class="section pb-3 text-center">
-                        <h2 class="section-heading h1 pt-4">รายชื่อผู้สมัคร</h2>
-                        <p class="section-description">แนะนำข้อมูลผู้สมัครโหวต/เลือกตั้ง</p>
-                        <div class="row" id="candidate_list"></div>
-                        <div class="d-flex justify-content-center d-none" id="vote_button"><button class="btn btn-primary" onclick="window.location = '?page=election&election_id=00001'">ไปลงคะแนน</button></div>
-                    </section>
-                </div>
+        <div class="row">
+            <div class="col">
+                <br>
+                <h3 id="election_title"></h3>
+                <p>รายละเอียดการโหวต :
+                <div class="d-inline" id="election_detail"></div>
+                </p>
+                <b class="">เปิดระบบ <div class="d-inline text-primary" id="election_time1"></div> ถึง <div class="d-inline text-primary" id="election_time2"></div></b>
+                <br>
+                <div id="election_status"></div>
             </div>
         </div>
-    <?php } else {
+        <div class="row">
+            <div class="col">
+                <section class="section pb-3 text-center">
+                    <h2 class="section-heading h1 pt-4">รายชื่อผู้สมัคร</h2>
+                    <p class="section-description">แนะนำข้อมูลผู้สมัครโหวต/เลือกตั้ง</p>
+                    <div class="row" id="candidate_list"></div>
+                    <div class="d-flex justify-content-center d-none" id="vote_button"><button class="btn btn-primary" onclick="window.location = '?page=election&election_id=00001'">ไปลงคะแนน</button></div>
+                </section>
+            </div>
+        </div>
+<?php } else {
         gotoPage('home');
     }
 } ?>
