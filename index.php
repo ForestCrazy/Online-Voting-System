@@ -88,8 +88,8 @@ $datenow = date("Y-m-d H:i:s");
             include_once __DIR__ . '/_page/home.php';
         } elseif ($_GET['page'] == "detail") {
             include_once __DIR__ . '/_page/detail.php';
-        } elseif ($_GET['page'] == "vote") {
-            include_once __DIR__ . '/_page/vote.php';
+        } elseif ($_GET['page'] == "election") {
+            include_once __DIR__ . '/_page/election.php';
         } elseif ($_GET['page'] == "result") {
             include_once __DIR__ . '/_page/result.php';
         } elseif ($_GET['page'] == "login") {
