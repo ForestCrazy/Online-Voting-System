@@ -9,6 +9,6 @@ CREATE TABLE IF NOT EXISTS `ballot` (
   `cdd_id` int(5) NOT NULL,
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `recovery_phrase` varchar(30),
-  `recovery_phrase_activate` enum('true', 'false') DEFAULT 'false',
-  PRIMARY KEY (`election_id`)
+  `recovery_phrase_activate` boolean DEFAULT false,
+  PRIMARY KEY (`ballot_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
