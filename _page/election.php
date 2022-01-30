@@ -1,100 +1,167 @@
 <?php
-if (!isset($_SESSION["username"])) { ?>
-    <script langquage='javascript'>
-        window.location = "?page=login";
-    </script>
-    <?php } else {
-    if (isset($_POST["election_id"])) { ?>
+if (!isset($_SESSION["username"])) {
+    gotoPage('home');
+} else {
+    if (isset($_GET["election_id"])) { ?>
         <script type="text/javascript">
-            $(function() {
-                $("#submit_select_candidate").click(function() {
-                    var selectcandidatebox = $(".selectcandidatebox:checked").val();
-                    var election_id = $('input[name="election_id"]').val();
-                    $.ajax({
-                        url: "API/vote_candidate.php",
-                        type: "GET",
-                        data: "candidate_id=" + selectcandidatebox + "&election_id=" + election_id,
-                        dataType: "text",
-                        success: function(result) {
-                            var object = jQuery.parseJSON(result);
-                            if (object != '') {
-                                $.each(object, function(key, alertlabel) {
-                                    alertbox(alertlabel["msg_title"], alertlabel["msg_alert"], alertlabel["icon"], alertlabel["href"]);
-                                });
+            // $(function() {
+            //     $("#submit_select_candidate").click(function() {
+            //         var selectcandidatebox = $(".selectcandidatebox:checked").val();
+            //         var election_id = $('input[name="election_id"]').val();
+            //         $.ajax({
+            //             url: "API/vote_candidate.php",
+            //             type: "GET",
+            //             data: "candidate_id=" + selectcandidatebox + "&election_id=" + election_id,
+            //             dataType: "text",
+            //             success: function(result) {
+            //                 var object = jQuery.parseJSON(result);
+            //                 if (object != '') {
+            //                     $.each(object, function(key, alertlabel) {
+            //                         alertBox(alertlabel["msg_title"], alertlabel["msg_alert"], alertlabel["icon"], alertlabel["href"]);
+            //                     });
+            //                 }
+            //             }
+            //         });
+            //     });
+            // });
+            // $(function() {
+            //     $("#notwishtovote").click(function() {
+            //         var election_id = $('input[name="election_id"]').val();
+            //         $.ajax({
+            //             url: "API/vote_candidate.php",
+            //             type: "GET",
+            //             data: "candidate_id=0" + "&election_id=" + election_id,
+            //             dataType: "text",
+            //             success: function(data) {
+            //                 var object = jQuery.parseJSON(data);
+            //                 if (object != '') {
+            //                     $.each(object, function(key, alertlabel) {
+            //                         alertbox(alertlabel["msg_title"], alertlabel["msg_alert"], alertlabel["icon"], alertlabel["href"]);
+            //                     });
+            //                 }
+            //             }
+            //         });
+            //     });
+            // });
+            function voteCandidate(candidateId = 0) {
+                Swal.fire({
+                    title: 'ยืนยันการลงคะแนน',
+                    text: candidateId == 0 ? "คลิกปุ่ม ยืนยัน เพื่อยืนยันไม่ประสงค์การลงคะแนน" : "คลิกปุ่ม ยืนยัน เพื่อยืนยันการลงคะแนนให้หมายเลข " + candidateId,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ยืนยัน',
+                    cancelButtonText: 'ยกเลิก'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post({
+                            url: '/API/vote_candidate.php',
+                            data: {
+                                candidate_id: candidateId,
+                                election_id: getUrlParams('election_id')
                             }
-                        }
-                    });
-                });
-            });
-            $(function() {
-                $("#notwishtovote").click(function() {
-                    var election_id = $('input[name="election_id"]').val();
-                    $.ajax({
-                        url: "API/vote_candidate.php",
-                        type: "GET",
-                        data: "candidate_id=0" + "&election_id=" + election_id,
-                        dataType: "text",
-                        success: function(data) {
-                            var object = jQuery.parseJSON(data);
-                            if (object != '') {
-                                $.each(object, function(key, alertlabel) {
-                                    alertbox(alertlabel["msg_title"], alertlabel["msg_alert"], alertlabel["icon"], alertlabel["href"]);
-                                });
+                        }).done((response) => {
+                            var voteCandidate = null;
+                            try {
+                                voteCandidate = JSON.parse(response);
+                            } catch (e) {
+                                Swal.fire({
+                                    title: 'เกิดข้อผิดพลาด',
+                                    icon: 'error',
+                                    showCloseButton: true,
+                                    focusConfirm: false,
+                                    confirmButtonText: 'ตกลง'
+                                })
+                                return;
                             }
-                        }
-                    });
-                });
-            });
+                            Swal.fire({
+                                title: 'ลงคะแนนสำเร็จ',
+                                icon: 'success',
+                                html: '',
+                                showCloseButton: true,
+                                focusConfirm: false,
+                                confirmButtonText: 'ตกลง',
+                            })
+                        }).fail((response, status, error) => {
+                            var voteCandidate = null;
+                            try {
+                                voteCandidate = JSON.parse(response.responseText);
+                            } catch (e) {
+                                Swal.fire({
+                                    title: 'เกิดข้อผิดพลาด',
+                                    icon: 'error',
+                                    showCloseButton: true,
+                                    focusConfirm: false,
+                                    confirmButtonText: 'ตกลง'
+                                })
+                                return;
+                            }
+                            Swal.fire({
+                                title: 'ลงคะแนนไม่สำเร็จ',
+                                icon: 'error',
+                                text: voteCandidate.msg,
+                                showCloseButton: true,
+                                focusConfirm: false,
+                                confirmButtonText: 'ตกลง',
+                            })
+                        })
+                    }
+                })
+            }
+
+            function clickToVote(e) {
+                const candidateToVote = $('input[type="radio"][class="candidate-input"]:checked').val();
+                if (candidateToVote) {
+                    voteCandidate(candidateToVote);
+                } else {
+                    Swal.fire({
+                        title: 'กรุณาเลือกคนที่ต้องการลงคะแนน',
+                        icon: 'warning',
+                        showCloseButton: true,
+                        focusConfirm: false,
+                        confirmButtonText: 'ตกลง',
+                    })
+                }
+            }
+
+            $(document).ready(() => {
+                $.get({
+                    url: '/API/election.php',
+                    data: {
+                        election_id: getUrlParams('election_id')
+                    }
+                }).done((response) => {
+                    var electionDetail = null;
+                    try {
+                        electionDetail = JSON.parse(response);
+                    } catch (e) {
+                        console.error(e);
+                        Swal.fire({
+                            title: 'เกิดข้อผิดพลาด',
+                            icon: 'error',
+                            showCloseButton: true,
+                            focusConfirm: false,
+                            confirmButtonText: 'ตกลง',
+                        })
+                        return;
+                    }
+                    electionDetail.candidate.forEach((candidate) => {
+                        $('#candidate_list').append('<div class="d-flex border rounded mb-2"><div class="p-2 flex-shrink-1 d-inline-flex align-items-center border-right"><input type="radio" name="candidate-vote" class="candidate-input" value="' + candidate.cdd_id + '" /></div><div class="p-2 flex-shrink-2 border-right"><img src="' + candidate.img + '" class="candidate-img"></div><div class="p-2 w-100"><h5 class="">' + candidate.FirstName + ' ' + candidate.LastName + '</h5><div>' + candidate.slogan + '</div></div></div>');
+                    })
+                })
+            })
         </script>
-        <div class="d-flex justify-content-center">
-            <div class="row">
-                <div class="col col-sm-12">
-                    <hr>
-                    <h3>รายชื่อผู้สมัคร</h3>
-                    <form action="javascript:void(0)" name="selectcandidate">
-                        <table class="table table-bordered table-striped table-hover">
-                            <thead>
-                                <tr class="grey lighten-2">
-                                    <th width="5%">หมายเลข.</th>
-                                    <th width="12%">IMG</th>
-                                    <th width="20%">ชื่อ</th>
-                                    <th width="50%">สโลแกน</th>
-                                    <th width="5%">
-                                        <center>เลือก</center>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $election_id = mysqli_real_escape_string($connect, $_POST["election_id"]);
-                                $sql_candidate = 'SELECT * FROM candidate WHERE election_id = "' . $election_id . '"';
-                                $res_candidate = mysqli_query($connect, $sql_candidate);
-                                while ($fetchcandidate = mysqli_fetch_assoc($res_candidate)) {
-                                ?>
-                                    <tr>
-                                        <td><?php echo $fetchcandidate["cdd_id"]; ?></td>
-                                        <td><img src="<?php echo $fetchcandidate["img"]; ?>" width="100%"></td>
-                                        <td><?php echo $fetchcandidate["FirstName"] . ' ' . $fetchcandidate["LastName"]; ?></td>
-                                        <td><?php echo $fetchcandidate["slogan"]; ?></td>
-                                        <td align="center">
-                                            <input type="radio" class="selectcandidatebox" name="candidate_id" value="<?php echo $fetchcandidate["cdd_id"]; ?>" required>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="election_id" name="election_id" value="<?php echo $_POST["election_id"]; ?>">
-                        <p align="right">
-                            <button class="btn btn-danger waves-effect waves-light" id="notwishtovote"> ไม่ประสงค์ลงคะแนน </button>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light" id="submit_select_candidate"> บันทึก </button>
-                        </p>
-                    </form>
-                </div>
-            </div>
+        <h3>รายชื่อผู้สมัคร</h3>
+        <hr>
+        <div id="candidate_list">
+
         </div>
-    <?php } else { ?>
-        <script langquage='javascript'>
-            window.location = "?page=home";
-        </script>
-<?php }
+        <div class="text-right">
+            <button class="btn btn-danger waves-effect waves-light" onclick="voteCandidate(0)"> ไม่ประสงค์ลงคะแนน </button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light" onclick="clickToVote()"> บันทึก </button>
+        </div>
+<?php } else {
+        gotoPage('home');
+    }
 } ?>
