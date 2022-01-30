@@ -1,81 +1,67 @@
 <?php
 require_once("../_system/config.php");
 require_once("../_system/database.php");
-$resultarray = array();
-$result = array();
-if (isset($_GET["candidate_id"]) && isset($_GET["election_id"])) {
-    $candidate_id = mysqli_real_escape_string($connect, $_GET["candidate_id"]);
-    $election_id = mysqli_real_escape_string($connect, $_GET["election_id"]);
-    $sql_checkvote = 'SELECT id FROM votelog WHERE username = "' . $_SESSION['username'] . '" AND election_id = "' . $election_id . '"';
-    $res_checkvote = mysqli_query($connect, $sql_checkvote);
-    if ($res_checkvote) {
-        $num_checkvote = mysqli_num_rows($res_checkvote);
-        if ($num_checkvote == 0) {
-            if ($_GET['candidate_id'] == 0) {
-                $sql_votecandidate = 'INSERT INTO votelog (username, election_id) VALUES ("' . $_SESSION['username'] . '", "' . $election_id . '")';
-                $res_votecandidate = mysqli_query($connect, $sql_votecandidate);
-                if ($res_votecandidate) {
-                    $result["msg_title"] = 'สำเร็จ!';
-                    $result["msg_alert"] = 'บันทึกข้อมูลสำเร็จ';
-                    $result["icon"] = 'success';
-                    $result["href"] = '?page=home';
-                } else {
-                    $result["msg_title"] = 'ผิดพลาด!';
-                    $result["msg_alert"] = 'เกิดข้อผิดพลาดในการบันทึกข้อมูล #ErrID: QUERY_01';
-                    $result["icon"] = 'error';
-                }
-            } else {
-                $sql_checkcandidate = 'SELECT cdd_id FROM candidate WHERE cdd_id = "' . $candidate_id . '" AND election_id = "' . $election_id . '"';
-                $res_checkcandidate = mysqli_query($connect, $sql_checkcandidate);
-                if ($res_checkcandidate) {
-                    $num_checkcandidate = mysqli_num_rows($res_checkcandidate);
-                    if ($num_checkcandidate == 1) {
-                        $sql_votecandidate = 'INSERT INTO votelog (username, election_id) VALUES ("' . $_SESSION['username'] . '", "' . $election_id . '")';
-                        $res_votecandidate = mysqli_query($connect, $sql_votecandidate);
-                        if ($res_votecandidate) {
-                            $sql_addscore = 'UPDATE candidate SET score=score+"1" WHERE election_id = "' . $election_id . '" AND cdd_id = "' . $candidate_id . '"';
-                            $res_addscore = mysqli_query($connect, $sql_addscore);
-                            if ($res_addscore) {
-                                $result["msg_title"] = 'สำเร็จ!';
-                                $result["msg_alert"] = 'ลงคะแนนสำเร็จ';
-                                $result["icon"] = 'success';
-                                $result["href"] = '?page=home';
-                            } else {
-                                $result["msg_title"] = 'ผิดพลาด!';
-                                $result["msg_alert"] = 'เกิดข้อผิดพลาดในการลงคะแนน #ErrID: QUERY_02';
-                                $result["icon"] = 'error';
-                            }
-                        } else {
-                            $result["msg_title"] = 'ผิดพลาด!';
-                            $result["msg_alert"] = 'เกิดข้อผิดพลาดในการลงคะแนน #ErrID: QUERY_03';
-                            $result["icon"] = 'error';
-                        }
+if (isset($_SESSION["u_id"])) {
+    if (isset($_POST["candidate_id"]) && isset($_POST["election_id"])) {
+        $candidate_id = mysqli_real_escape_string($connect, $_POST["candidate_id"]);
+        $election_id = mysqli_real_escape_string($connect, $_POST["election_id"]);
+        $sql_checkvote = 'SELECT id FROM votelog WHERE u_id = "' . $_SESSION['u_id'] . '" AND election_id = "' . $election_id . '"';
+        $res_checkvote = mysqli_query($connect, $sql_checkvote);
+        if ($res_checkvote) {
+            $num_checkvote = mysqli_num_rows($res_checkvote);
+            if ($num_checkvote == 0) {
+                if ($_POST['candidate_id'] == 0) {
+                    $sql_votecandidate = 'INSERT INTO votelog (u_id, election_id) VALUES ("' . $_SESSION['u_id'] . '", "' . $election_id . '")';
+                    $res_votecandidate = mysqli_query($connect, $sql_votecandidate);
+                    if ($res_votecandidate) {
+                        echo json_encode(array('success' => true, 'msg' => 'บันทึกการลงคะแนนเรียบร้อยแล้ว'));
                     } else {
-                        $result["msg_title"] = 'ผิดพลาด!';
-                        $result["msg_alert"] = 'ไม่พบผู้สมัครเลือกตั้งในฐานข้อมูล #ErrID: Candidate_Member_Not_Found';
-                        $result["icon"] = 'error';
+                        http_response_code(500);
+                        echo json_encode(array('success' => false, 'msg' => 'เกิดข้อผิดพลาด', 'error_code' => 'QUERY_01'));
                     }
                 } else {
-                    $result["msg_title"] = 'ผิดพลาด!';
-                    $result["msg_alert"] = 'เกิดข้อผิดพลาดในการตรวจสอบข้อมูล #ErrID: QUERY_04';
-                    $result["icon"] = 'error';
+                    $sql_checkcandidate = 'SELECT cdd_id FROM candidate WHERE cdd_id = "' . $candidate_id . '" AND election_id = "' . $election_id . '"';
+                    $res_checkcandidate = mysqli_query($connect, $sql_checkcandidate);
+                    if ($res_checkcandidate) {
+                        $num_checkcandidate = mysqli_num_rows($res_checkcandidate);
+                        if ($num_checkcandidate == 1) {
+                            $sql_votecandidate = 'INSERT INTO votelog (u_id, election_id) VALUES ("' . $_SESSION['u_id'] . '", "' . $election_id . '")';
+                            $res_votecandidate = mysqli_query($connect, $sql_votecandidate);
+                            if ($res_votecandidate) {
+                                $sql_addscore = 'UPDATE candidate SET score=score+"1" WHERE election_id = "' . $election_id . '" AND cdd_id = "' . $candidate_id . '"';
+                                $res_addscore = mysqli_query($connect, $sql_addscore);
+                                if ($res_addscore) {
+                                    echo json_encode(array('success' => true, 'msg' => 'บันทึกการลงคะแนนเรียบร้อยแล้ว'));
+                                } else {
+                                    http_response_code(500);
+                                    echo json_encode(array('success' => false, 'msg' => 'เกิดข้อผิดพลาด', 'error_code' => 'QUERY_02'));
+                                }
+                            } else {
+                                http_response_code(500);
+                                echo json_encode(array('success' => false, 'msg' => 'เกิดข้อผิดพลาด', 'error_code' => 'QUERY_03'));
+                            }
+                        } else {
+                            http_response_code(507);
+                            echo json_encode(array('success' => false, 'msg' => 'เกิดข้อผิดพลาด', 'error_code' => 'Candidate_Member_Not_Found'));
+                        }
+                    } else {
+                        http_response_code(500);
+                        echo json_encode(array('success' => false, 'msg' => 'เกิดข้อผิดพลาด', 'error_code' => 'QUERY_04'));
+                    }
                 }
+            } else {
+                http_response_code(429);
+                echo json_encode(array('success' => false, 'msg' => 'ไม่สามารถลงคะแนนซ้ำได้', 'error_code' => 'Already_Voted'));
             }
         } else {
-            $result["msg_title"] = 'ผิดพลาด!';
-            $result["msg_alert"] = 'ไม่สามารถลงคะแนนซ้ำได้';
-            $result["icon"] = 'error';
+            http_response_code(500);
+            echo json_encode(array('success' => false, 'msg' => 'เกิดข้อผิดพลาด', 'error_code' => 'QUERY_05'));
         }
     } else {
-        $result["msg_title"] = 'ผิดพลาด!';
-        $result["msg_alert"] = 'เกิดข้อผิดพลาดในการตรวจสอบข้อมูล #ErrID: QUERY_05';
-        $result["icon"] = 'error';
+        http_response_code(422);
+        echo json_encode(array('success' => false, 'msg' => 'เกิดข้อผิดพลาด', 'error_code' => 'Missing_Parameter'));
     }
 } else {
-    $result["msg_title"] = 'Error!';
-    $result["msg_alert"] = 'XD';
-    $result["icon"] = 'error';
+    http_response_code(401);
+    echo json_encode(array('success' => false, 'msg' => 'กรุณาเข้าสู่ระบบก่อนทำการลงคะแนน'));
 }
-array_push($resultarray, $result);
-echo json_encode($resultarray);
-//print_r($result);
