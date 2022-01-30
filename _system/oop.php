@@ -3,7 +3,7 @@ function gotoPage($page)
 {
 ?>
     <script>
-        window.location.href = '<?= $page ?>';
+        window.location.href = '?page=<?= $page ?>';
     </script>
 <?php
 }
