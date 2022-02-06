@@ -81,6 +81,8 @@ $datenow = date("Y-m-d H:i:s");
             include_once __DIR__ . '/_page/login.php';
         } elseif ($_GET['page'] == "logout") {
             include_once __DIR__ . '/_page/logout.php';
+        } elseif ($_GET['page'] == "admin") {
+            include_once __DIR__ . '/_page/admin.php';
         } else {
             echo '<div class="container"><div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i> ไม่พบหน้าที่ท่านร้องขอ กำลังพาท่านกลับไปหน้าหลัก...</div></div>';
             echo '<meta http-equiv="refresh" content="3;URL=?page=home"/>';
