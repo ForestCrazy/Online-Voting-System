@@ -92,7 +92,7 @@ if (!isset($_SESSION["u_id"])) {
                     <h2 class="section-heading h1 pt-4">รายชื่อผู้สมัคร</h2>
                     <p class="section-description">แนะนำข้อมูลผู้สมัครโหวต/เลือกตั้ง</p>
                     <div class="row" id="candidate_list"></div>
-                    <div class="d-flex justify-content-center d-none" id="vote_button"><button class="btn btn-primary" onclick="window.location = '?page=election&election_id=00001'">ไปลงคะแนน</button></div>
+                    <div class="d-flex justify-content-center d-none" id="vote_button"><button class="btn btn-primary" onclick="window.location = '?page=election&election_id=' + getUrlParams('election_id')">ไปลงคะแนน</button></div>
                 </section>
             </div>
         </div>
