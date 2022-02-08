@@ -147,7 +147,7 @@ if (!isset($_SESSION["username"])) {
                         return;
                     }
                     electionDetail.candidate.forEach((candidate) => {
-                        $('#candidate_list').append('<div class="d-flex border rounded mb-2"><div class="p-2 flex-shrink-1 d-inline-flex align-items-center border-right"><input type="radio" name="candidate-vote" class="candidate-input" value="' + candidate.cdd_id + '" /></div><div class="p-2 flex-shrink-2 border-right"><img src="' + candidate.img + '" class="candidate-img"></div><div class="p-2 w-100"><h5 class="">' + candidate.FirstName + ' ' + candidate.LastName + '</h5><div>' + candidate.slogan + '</div></div></div>');
+                        $('#candidate_list').append('<div class="d-flex border rounded mb-2"><div class="p-2 flex-shrink-1 d-inline-flex align-items-center border-right"><input type="radio" name="candidate-vote" class="candidate-input" value="' + candidate.cdd_id + '" /></div><div class="p-2 flex-shrink-2 border-right"><img src="' + candidate.img + '" class="candidate-img"></div><div class="p-2 w-100"><h5 class="">' + candidate.pre_fix + ' ' + candidate.FirstName + ' ' + candidate.LastName + '</h5><div>' + candidate.slogan + '</div></div></div>');
                     })
                 })
             })
