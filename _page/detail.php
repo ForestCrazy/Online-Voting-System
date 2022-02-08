@@ -36,7 +36,7 @@ if (!isset($_SESSION["u_id"])) {
             const electionId = getUrlParams('election_id');
 
             function candidateComponent(candidate) {
-                $('#candidate_list').append('<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"><div class="card testimonial-card"><div class="card-up teal lighten-2"></div><div class="avatar mx-auto white"><img src="' + candidate.img + '" class="rounded-circle img-fluid" width="60%" style="margin-top: 10px;"></div><div class="card-body"><h4 class="card-title mt-1">' + candidate.FirstName + ' ' + candidate.LastName + '</h4><hr><div>หมายเลข : <div class="text-primary d-inline">' + candidate.cdd_id + '</div></div><i class="fas fa-quote-left"></i> ' + candidate.slogan + ' <i class="fas fa-quote-right"></i></div></div></div>');
+                $('#candidate_list').append('<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"><div class="card testimonial-card"><div class="card-up teal lighten-2"></div><div class="avatar mx-auto white"><img src="' + candidate.img + '" class="rounded-circle img-fluid" width="60%" style="margin-top: 10px;"></div><div class="card-body"><h4 class="card-title mt-1">' + candidate.pre_fix + ' ' + candidate.FirstName + ' ' + candidate.LastName + '</h4><hr><div>หมายเลข : <div class="text-primary d-inline">' + candidate.cdd_id + '</div></div><i class="fas fa-quote-left"></i> ' + candidate.slogan + ' <i class="fas fa-quote-right"></i></div></div></div>');
             }
 
             function ElectionInfo() {
