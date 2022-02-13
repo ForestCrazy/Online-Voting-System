@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION["u_id"])) {
-    gotoPage('home');
+    gotoPage('login');
 } else {
     if (isset($_GET["election_id"])) {
         $e_id = mysqli_real_escape_string($connect, $_GET["election_id"]);
