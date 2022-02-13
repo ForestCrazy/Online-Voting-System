@@ -17,7 +17,7 @@
             var tr = $('<tr class="text-center"></tr>');
             tr.append($('<td></td>').text(account.username));
             tr.append($('<td></td>').text(account.role == 'admin' ? 'ผู้ดูแลระบบ' : 'ผู้ใช้งานทั่วไป'));
-            tr.append($('<td></td>').append($('<i class="far fa-edit"></i>').attr('onclick', 'editAccountModal(' + account.id + ')')));
+            tr.append($('<td></td>').append($('<i class="far fa-edit"></i>').attr('onclick', 'editAccountModal(' + account.id + ')')).append($('<i class="fa-solid fa-key"></i>').attr('onclick', 'changePasswordModal(' + account.id + ')')));
             $('#table-account tbody').append(tr);
         }
 
@@ -171,6 +171,52 @@
                 }
             })
         }
+
+        function changePasswordModal(id) {
+            $('#modal-account-change-password').modal('show');
+            $("#modal-account-change-password-id").val(id);
+            $("#modal-account-change-password-new-password").val('');
+            $("#modal-account-change-password-confirm-new-password").val('');
+        }
+
+        function submitChangePasswordAccount() {
+            var id = $('#modal-account-change-password-id').val();
+            var password = $('#modal-account-change-password-new-password').val();
+            var confirmPassword = $('#modal-account-change-password-confirm-new-password').val();
+            if (password == confirmPassword) {
+                $.post({
+                    url: '/API/admin/change_password.php',
+                    data: {
+                        "id": id,
+                        "password": password
+                    }
+                }).then((response) => {
+                    try {
+                        var res = JSON.parse(response);
+                        if (res.success) {
+                            $('#modal-account-change-password').modal('hide');
+                            Swal.fire(
+                                'เปลี่ยนรหัสผ่านสำเร็จ',
+                                'ทำการเปลี่ยนรหัสผ่านสำเร็จ',
+                                'success'
+                            )
+                        } else {
+                            console.error('change password failed');
+                            return;
+                        }
+                    } catch (e) {
+                        console.error(e);
+                        return;
+                    }
+                })
+            } else {
+                Swal.fire({
+                    title: 'รหัสผ่านไม่ตรงกัน',
+                    text: 'กรุณากรอกรหัสผ่านให้ตรงกัน',
+                    icon: 'error'
+                })
+            }
+        }
         $(document).ready(function() {
             loadAccount();
         });
@@ -255,6 +301,33 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                     <button type="button" class="btn btn-primary" onclick="submitCreateAccount()">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-account-change-password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">เปลี่ยนรหัสผ่าน</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="modal-account-change-password-id" id="modal-account-change-password-id">
+                    <div class="form-group">
+                        <label>รหัสผ่านใหม่</label>
+                        <input type="password" name="password" class="form-control" id="modal-account-change-password-new-password">
+                    </div>
+                    <div class="form-group">
+                        <label>ยืนยันรหัสผ่านใหม่</label>
+                        <input type="password" name="password" class="form-control" id="modal-account-change-password-confirm-new-password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                    <button type="button" class="btn btn-primary" onclick="submitChangePasswordAccount()">บันทึก</button>
                 </div>
             </div>
         </div>
