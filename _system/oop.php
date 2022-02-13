@@ -41,3 +41,29 @@ function DateThai($strDate)
     $strMonthThai = $strMonthCut[$strMonth];
     return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
 }
+
+function electionState($election)
+{
+    $electionState = 1;
+    $dateNow = date("Y-m-d H:i:s");
+    if (date("Y-m-d H:i:s", strtotime($election["announcement_time"])) <= $dateNow) {
+        $electionState = 4;
+    } else if (date("Y-m-d H:i:s", strtotime($election["end_time"])) <= $dateNow) {
+        $electionState = 3;
+    } else if (date("Y-m-d H:i:s", strtotime($election["start_time"])) <= $dateNow) {
+        $electionState = 2;
+    }
+    return $electionState;
+}
+
+function candidateElection($election_id)
+{
+    global $connect;
+    $sql_candidate = 'SELECT cdd_id, pre_fix, FirstName, LastName, slogan, img FROM candidate WHERE election_id = "' . $election_id . '" ORDER BY cdd_id ASC';
+    $res_candidate = mysqli_query($connect, $sql_candidate);
+    $candidateArray = array();
+    while ($fetch_candidate = mysqli_fetch_assoc($res_candidate)) {
+        array_push($candidateArray, $fetch_candidate);
+    }
+    return $candidateArray;
+}
