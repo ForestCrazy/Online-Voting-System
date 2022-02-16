@@ -43,6 +43,7 @@
                 $('#modal-account-edit').modal('show');
                 $('#modal-account-edit-id').val(account.id);
                 $('#modal-account-edit-username').val(account.username);
+                $('#modal-account-edit-pre_fix').val(account.pre_fix);
                 $('#modal-account-edit-FirstName').val(account.FirstName);
                 $('#modal-account-edit-LastName').val(account.LastName);
                 $('#modal-account-edit-role').val(account.role);
@@ -75,6 +76,7 @@
         function editAccount(roleIsChange = false) {
             var id = $('#modal-account-edit-id').val();
             var username = $('#modal-account-edit-username').val();
+            var pre_fix = $('#modal-account-edit-pre_fix').val();
             var FirstName = $('#modal-account-edit-FirstName').val();
             var LastName = $('#modal-account-edit-LastName').val();
             var role = $('#modal-account-edit-role').val();
@@ -83,6 +85,7 @@
                 "data": {
                     "id": id,
                     "username": username,
+                    "pre_fix": pre_fix,
                     "FirstName": FirstName,
                     "LastName": LastName,
                     "role": role
@@ -138,6 +141,7 @@
         function submitCreateAccount() {
             var username = $('#modal-account-create-username').val();
             var password = $('#modal-account-create-password').val();
+            var pre_fix = $('#modal-account-create-pre_fix').val();
             var FirstName = $('#modal-account-create-FirstName').val();
             var LastName = $('#modal-account-create-LastName').val();
             var role = $('#modal-account-create-role').val();
@@ -146,6 +150,7 @@
                 data: {
                     "username": username,
                     "password": password,
+                    "pre_fix": pre_fix,
                     "FirstName": FirstName,
                     "LastName": LastName,
                     "role": role
@@ -161,6 +166,12 @@
                             'ทำการเพิ่มบัญชีสำเร็จ',
                             'success'
                         )
+                        $('#modal-account-create-username').val('');
+                        $('#modal-account-create-password').val('');
+                        $('#modal-account-create-pre_fix').val('');
+                        $('#modal-account-create-FirstName').val('');
+                        $('#modal-account-create-LastName').val('');
+                        $('#modal-account-create-role').val('user');
                     } else {
                         console.error('create account failed');
                         return;
@@ -240,6 +251,10 @@
                         <input type="text" name="username" class="form-control" id="modal-account-edit-username" readonly>
                     </div>
                     <div class="form-group">
+                        <label>คำนำหน้า</label>
+                        <input type="text" name="pre_fix" class="form-control" id="modal-account-edit-pre_fix">
+                    </div>
+                    <div class="form-group">
                         <label>ชื่อ</label>
                         <input type="text" name="FirstName" class="form-control" id="modal-account-edit-FirstName">
                     </div>
@@ -281,6 +296,10 @@
                     <div class="form-group">
                         <label>รหัสผ่าน</label>
                         <input type="password" name="password" class="form-control" id="modal-account-create-password">
+                    </div>
+                    <div class="form-group">
+                        <label>คำนำหน้า</label>
+                        <input type="text" name="pre_fix" class="form-control" id="modal-account-create-pre_fix">
                     </div>
                     <div class="form-group">
                         <label>ชื่อ</label>
