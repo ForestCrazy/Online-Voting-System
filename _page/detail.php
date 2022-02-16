@@ -53,7 +53,7 @@ if (!isset($_SESSION["u_id"])) {
                         return;
                     }
                     $('#election_title').text(electionDetail.title);
-                    $('#election_detail').text(electionDetail.detail);
+                    $('#election_description').text(electionDetail.description);
                     $('#election_time1').text(DateThai(electionDetail.start_time) + ' น.');
                     $('#election_time2').text(DateThai(electionDetail.end_time) + ' น.');
                     if (electionDetail.election_state === 2) {
@@ -80,7 +80,7 @@ if (!isset($_SESSION["u_id"])) {
                 <br>
                 <h3 id="election_title"></h3>
                 <p>รายละเอียดการโหวต :
-                <div class="d-inline" id="election_detail"></div>
+                <div class="d-inline" id="election_description"></div>
                 </p>
                 <b class="">เปิดระบบ <div class="d-inline text-primary" id="election_time1"></div> ถึง <div class="d-inline text-primary" id="election_time2"></div></b>
                 <br>
