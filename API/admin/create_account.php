@@ -8,7 +8,7 @@ if (isset($_SESSION['u_id'])) {
         $res_check_account = mysqli_query($connect, $sql_check_account);
         if ($res_check_account) {
             if (mysqli_num_rows($res_check_account) == 0) {
-                $sql_create_account = 'INSERT INTO account (FirstName, LastName, username, password, role) VALUES ("' . $_POST['FirstName'] . '", "' . $_POST['LastName'] . '", "' . $_POST['username'] . '", "' . hash('sha256', $_POST['password']) . '", "' . $_POST['role'] . '")';
+                $sql_create_account = 'INSERT INTO account (pre_fix, FirstName, LastName, username, password, role) VALUES ("' . $_POST['pre_fix'] . '", "' . $_POST['FirstName'] . '", "' . $_POST['LastName'] . '", "' . $_POST['username'] . '", "' . hash('sha256', $_POST['password']) . '", "' . $_POST['role'] . '")';
                 $res_create_account = mysqli_query($connect, $sql_create_account);
                 if ($res_create_account) {
                     echo json_encode(array("success" => true));
