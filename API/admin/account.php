@@ -4,7 +4,7 @@ require '../../_system/database.php';
 require '../../_system/oop.php';
 if (isset($_SESSION['u_id'])) {
     if (isAdmin($_SESSION['u_id'])) {
-        $sql_account_list = 'SELECT id, prefix, FirstName, LastName, username, role FROM account';
+        $sql_account_list = 'SELECT id, pre_fix, FirstName, LastName, username, role FROM account';
         if (isset($_GET['id'])) {
             $sql_account_list .= ' WHERE id = "' . $_GET['id'] . '"';
         } else if (isset($_GET['username'])) {
