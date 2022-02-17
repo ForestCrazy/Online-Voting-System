@@ -14,3 +14,5 @@
 
 asset/img/candidate/*.*
 asset/img/election/*.*
+!asset/img/candidate/.gitkeep
+!asset/img/election/.gitkeep
