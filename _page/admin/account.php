@@ -274,7 +274,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                    <button type="button" class="btn btn-warning">ระงับ</button>
                     <button type="button" class="btn btn-primary" onclick="submitEditAccount()">บันทึก</button>
                 </div>
             </div>
