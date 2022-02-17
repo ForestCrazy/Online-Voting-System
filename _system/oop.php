@@ -59,7 +59,7 @@ function electionState($election)
 function candidateElection($election_id)
 {
     global $connect;
-    $sql_candidate = 'SELECT cdd_id, pre_fix, FirstName, LastName, slogan, img FROM candidate WHERE election_id = "' . $election_id . '" ORDER BY cdd_id ASC';
+    $sql_candidate = 'SELECT account.id, account.username, candidate.cdd_id, candidate.pre_fix, candidate.FirstName, candidate.LastName, candidate.slogan, candidate.img FROM candidate INNER JOIN account ON candidate.u_id = account.id WHERE election_id = "' . $election_id . '" ORDER BY candidate.cdd_id ASC';
     $res_candidate = mysqli_query($connect, $sql_candidate);
     $candidateArray = array();
     while ($fetch_candidate = mysqli_fetch_assoc($res_candidate)) {
