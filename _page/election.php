@@ -4,45 +4,6 @@ if (!isset($_SESSION["username"])) {
 } else {
     if (isset($_GET["election_id"])) { ?>
         <script type="text/javascript">
-            // $(function() {
-            //     $("#submit_select_candidate").click(function() {
-            //         var selectcandidatebox = $(".selectcandidatebox:checked").val();
-            //         var election_id = $('input[name="election_id"]').val();
-            //         $.ajax({
-            //             url: "API/vote_candidate.php",
-            //             type: "GET",
-            //             data: "candidate_id=" + selectcandidatebox + "&election_id=" + election_id,
-            //             dataType: "text",
-            //             success: function(result) {
-            //                 var object = jQuery.parseJSON(result);
-            //                 if (object != '') {
-            //                     $.each(object, function(key, alertlabel) {
-            //                         alertBox(alertlabel["msg_title"], alertlabel["msg_alert"], alertlabel["icon"], alertlabel["href"]);
-            //                     });
-            //                 }
-            //             }
-            //         });
-            //     });
-            // });
-            // $(function() {
-            //     $("#notwishtovote").click(function() {
-            //         var election_id = $('input[name="election_id"]').val();
-            //         $.ajax({
-            //             url: "API/vote_candidate.php",
-            //             type: "GET",
-            //             data: "candidate_id=0" + "&election_id=" + election_id,
-            //             dataType: "text",
-            //             success: function(data) {
-            //                 var object = jQuery.parseJSON(data);
-            //                 if (object != '') {
-            //                     $.each(object, function(key, alertlabel) {
-            //                         alertbox(alertlabel["msg_title"], alertlabel["msg_alert"], alertlabel["icon"], alertlabel["href"]);
-            //                     });
-            //                 }
-            //             }
-            //         });
-            //     });
-            // });
             function voteCandidate(candidateId = 0) {
                 Swal.fire({
                     title: 'ยืนยันการลงคะแนน',

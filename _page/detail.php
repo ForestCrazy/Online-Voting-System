@@ -9,29 +9,6 @@ if (!isset($_SESSION["u_id"])) {
         $fetch_election_info = mysqli_fetch_assoc($res_election_info);
 ?>
         <script>
-            // $.ajax({
-            //             url: "./API/election_detail.php",
-            //             type: "GET",
-            //             data: "keyword=<?php echo $fetch_election_info['election_id']; ?>"
-            //         })
-            //         .done(function(result) {
-            //             var object = jQuery.parseJSON(result);
-            //             if (object != '') {
-            //                 $("#election_status").empty();
-            //                 $("#vote_button").empty();
-            //                 $.each(object, function(key, val) {
-            //                     if (val["html"] === "3") {
-            //                         status = 'สถานะ : <button type="submit" disabled class="btn btn-success">open</button>';
-            //                         form = '<form action="?page=vote" method="post"><input type="hidden" name="election_id" value="' + <?php echo $fetch_election_info['election_id']; ?> + '"><button type="submit" class="btn btn-primary">เข้าไปโหวตคะแนน</button>';
-            //                     } else {
-            //                         status = 'สถานะ : <button type="submit" disabled class="btn btn-danger">close</button></form>';
-            //                         form = '<a href="javascript:void(0)" class="btn btn-primary waves-effect waves-light disabled">เข้าไปโหวตคะแนน</a>';
-            //                     }
-            //                     $("#election_status").append(status);
-            //                     $("#vote_button").append(form);
-            //                 });
-            //             }
-            //         });
             var electionDetail = null;
             const electionId = getUrlParams('election_id');
 
