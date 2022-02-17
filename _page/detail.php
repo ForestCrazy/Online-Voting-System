@@ -62,6 +62,9 @@ if (!isset($_SESSION["u_id"])) {
                     } else {
                         $('#election_status').html('สถานะ : <button disabled class="btn btn-danger">close</button>');
                         $('#vote_button').addClass('d-none');
+                        if (electionDetail.election_state === 4) {
+                            $('#result_button').removeClass('d-none');
+                        }
                     }
                     $('#candidate_list').empty();
                     electionDetail.candidate.forEach((candidate) => {
