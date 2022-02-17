@@ -1,10 +1,8 @@
 <?php
-if (!isset($_POST["election_id"])) { ?>
-    <script langquage='javascript'>
-        window.location = "?page=home";
-    </script>
-<?php } else {
-    $election_id = mysqli_real_escape_string($connect, $_POST["election_id"]); 
+if (!isset($_GET["election_id"])) {
+    gotoPage('home');
+} else {
+    $election_id = mysqli_real_escape_string($connect, $_GET["election_id"]); 
     $sql_votelog = 'SELECT * FROM votelog WHERE election_id = "'. $election_id .'"';
     $res_votelog = mysqli_query($connect, $sql_votelog);
     $num_votelog = mysqli_num_rows($res_votelog);
@@ -61,7 +59,7 @@ if (!isset($_POST["election_id"])) { ?>
                         ?>
                             <tr>
                                 <td><?php echo $fetchcandidate["cdd_id"]; ?></td>
-                                <td><img src="<?php echo $fetchcandidate["img"]; ?>" width="100%"></td>
+                                <td><img src="/asset/img/candidate/<?php echo $fetchcandidate["img"]; ?>" width="100%"></td>
                                 <td><?php echo $fetchcandidate["FirstName"] . ' ' . $fetchcandidate["LastName"]; ?></td>
                                 <td><?php echo $fetchcandidate["slogan"]; ?></td>
                                 <td align="center"><?php echo $fetchcandidate["score"]; ?></td>
