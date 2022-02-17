@@ -13,6 +13,6 @@
 .vscode/settings.json
 
 asset/img/candidate/*.*
-asset/img/election/*.*
 !asset/img/candidate/.gitkeep
+asset/img/election/*.*
 !asset/img/election/.gitkeep
