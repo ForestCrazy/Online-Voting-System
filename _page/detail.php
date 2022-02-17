@@ -56,15 +56,15 @@ if (!isset($_SESSION["u_id"])) {
                     $('#election_description').text(electionDetail.description);
                     $('#election_time1').text(DateThai(electionDetail.start_time) + ' น.');
                     $('#election_time2').text(DateThai(electionDetail.end_time) + ' น.');
+                    if (electionDetail.election_state != 1) {
+                        $('#result_button').removeClass('d-none');
+                    }
                     if (electionDetail.election_state === 2) {
                         $('#election_status').html('สถานะ : <button disabled class="btn btn-success">open</button>');
                         $('#vote_button').removeClass('d-none');
                     } else {
                         $('#election_status').html('สถานะ : <button disabled class="btn btn-danger">close</button>');
                         $('#vote_button').addClass('d-none');
-                        if (electionDetail.election_state === 4) {
-                            $('#result_button').removeClass('d-none');
-                        }
                     }
                     $('#candidate_list').empty();
                     electionDetail.candidate.forEach((candidate) => {
@@ -96,8 +96,8 @@ if (!isset($_SESSION["u_id"])) {
                     <h2 class="section-heading h1 pt-4">รายชื่อผู้สมัคร</h2>
                     <p class="section-description">แนะนำข้อมูลผู้สมัครโหวต/เลือกตั้ง</p>
                     <div class="row" id="candidate_list"></div>
-                    <div class="d-flex justify-content-center d-none"><button class="btn btn-primary" id="vote_button" onclick="window.location = '?page=election&election_id=' + getUrlParams('election_id')">ไปลงคะแนน</button></div>
-                    <div class="d-flex justify-content-center d-none"><button class="btn btn-success" id="result_button" onclick="window.location = '?page=result&election_id=' + getUrlParams('election_id')">ผลคะแนน</button></div>
+                    <div class="d-flex justify-content-center"><button class="btn btn-primary d-none" id="vote_button" onclick="window.location = '?page=election&election_id=' + getUrlParams('election_id')">ไปลงคะแนน</button></div>
+                    <div class="d-flex justify-content-center"><button class="btn btn-success d-none" id="result_button" onclick="window.location = '?page=result&election_id=' + getUrlParams('election_id')">ผลคะแนน</button></div>
                 </section>
             </div>
         </div>
