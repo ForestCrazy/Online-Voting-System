@@ -15,14 +15,12 @@
                 console.log(e);
                 return;
             }
-            if (electionList.length >= 1) {
-                $('#election_list').empty();
-                if (cacheElectionList) {
-                    if (cacheElectionList.length >= 1) {
-                        cacheElectionList.forEach((election) => {
-                            clearInterval(election.interval);
-                        })
-                    }
+            $('#election_list').empty();
+            if (cacheElectionList) {
+                if (cacheElectionList.length >= 1) {
+                    cacheElectionList.forEach((election) => {
+                        clearInterval(election.interval);
+                    })
                 }
             }
 
