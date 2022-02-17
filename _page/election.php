@@ -82,6 +82,8 @@ if (!isset($_SESSION["username"])) {
                                 showCloseButton: true,
                                 focusConfirm: false,
                                 confirmButtonText: 'ตกลง',
+                            }).then(() => {
+                                window.location.href = '?page=result&election_id=' + getUrlParams('election_id');
                             })
                         }).fail((response, status, error) => {
                             var voteCandidate = null;
