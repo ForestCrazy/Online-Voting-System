@@ -60,7 +60,7 @@ if (!isset($_GET["election_id"])) {
                             <tr>
                                 <td><?php echo $fetchcandidate["cdd_id"]; ?></td>
                                 <td><img src="/asset/img/candidate/<?php echo $fetchcandidate["img"]; ?>" width="100%"></td>
-                                <td><?php echo $fetchcandidate["FirstName"] . ' ' . $fetchcandidate["LastName"]; ?></td>
+                                <td><?php echo $fetchcandidate["pre_fix"] . ' ' . $fetchcandidate["FirstName"] . ' ' . $fetchcandidate["LastName"]; ?></td>
                                 <td><?php echo $fetchcandidate["slogan"]; ?></td>
                                 <td align="center"><?php echo $fetchcandidate["score"]; ?></td>
                             </tr>
