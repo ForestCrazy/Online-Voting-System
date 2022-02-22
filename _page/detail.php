@@ -26,7 +26,7 @@ if (!isset($_SESSION["u_id"])) {
                     try {
                         electionDetail = JSON.parse(response);
                     } catch (e) {
-                        console.log(e);
+                        console.error(e);
                         return;
                     }
                     $('#election_title').text(electionDetail.title);
