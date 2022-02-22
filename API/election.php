@@ -18,17 +18,22 @@ if (isset($_GET["keyword"])) {
     }
 }
 $resElectionList = mysqli_query($connect, $sql_votelist);
-if ($specificElectionSearch) {
-    $fetchElection = mysqli_fetch_assoc($resElectionList);
-    $fetchElection["election_state"] = electionState($fetchElection);
-    $fetchElection["candidate"] = candidateElection($fetchElection["election_id"]);
-    echo json_encode($fetchElection);
+if (mysqli_num_rows($resElectionList) == 0) {
+    http_response_code(204);
+    echo json_encode(array());
 } else {
-    $electionArray = array();
-    while ($fetchElection = mysqli_fetch_assoc($resElectionList)) {
+    if ($specificElectionSearch) {
+        $fetchElection = mysqli_fetch_assoc($resElectionList);
         $fetchElection["election_state"] = electionState($fetchElection);
         $fetchElection["candidate"] = candidateElection($fetchElection["election_id"]);
-        array_push($electionArray, $fetchElection);
+        echo json_encode($fetchElection);
+    } else {
+        $electionArray = array();
+        while ($fetchElection = mysqli_fetch_assoc($resElectionList)) {
+            $fetchElection["election_state"] = electionState($fetchElection);
+            $fetchElection["candidate"] = candidateElection($fetchElection["election_id"]);
+            array_push($electionArray, $fetchElection);
+        }
+        echo json_encode($electionArray);
     }
-    echo json_encode($electionArray);
 }
