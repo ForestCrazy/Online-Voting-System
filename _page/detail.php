@@ -33,7 +33,7 @@ if (!isset($_SESSION["u_id"])) {
                     $('#election_description').text(electionDetail.description);
                     $('#election_time1').text(DateThai(electionDetail.start_time) + ' น.');
                     $('#election_time2').text(DateThai(electionDetail.end_time) + ' น.');
-                    if (electionDetail.election_state != 1) {
+                    if (electionDetail.election_state == 4) {
                         $('#result_button').removeClass('d-none');
                     }
                     if (electionDetail.election_state === 2) {
