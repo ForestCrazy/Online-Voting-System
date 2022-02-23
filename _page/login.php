@@ -8,18 +8,18 @@ if (isset($_SESSION["username"])) { ?>
         <div class="col col-lg-8">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Login</h5>
+                    <h5 class="card-title">เข้าสู่ระบบ</h5>
                     <form action="" method="POST">
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username">
+                            <label for="username">ชื่อผู้ใช้</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="กรอกชื่อผู้ใช้">
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            <label for="password">รหัสผ่าน</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="กรอกรหัสผ่าน">
                         </div>
                         <input type="hidden" name="submit_login">
-                        <button type="submit" class="btn btn-success">Login</button>
+                        <button type="submit" class="btn btn-success">เข้าสู่ระบบ</button>
                     </form>
                 </div>
             </div>
